@@ -66,17 +66,17 @@ export default function AddProject() {
         <div className="col-md-5 ps-lg-0 text-start">
           <img className="img-fluid w-100" src="/images/request.jpg" alt="" />
         </div>
-        <div className="col-md-7 py-5 newsletter-text" data-wow-delay="0.5s">
+        <div className="col-md-7 py-5 newsletter-text" >
           <form
             onSubmit={handleSubmit}
-            className=" p-4 mb-5 mt-100 text-white"
+            className=" p-4 mb-5 mt-100"
           >
-            <h2 className="mb-5 text-white">
+            <h3 className="text-white text-center fs-3">
               بدء مشروع جديد مع
               <span className="text-uppercase text-primary text-secondary px-2 me-2">
-                &nbsp;منصة بناءك
+                .منصة بناءك.
               </span>
-            </h2>
+            </h3>
 
             <MyInput
               placeholder="تاريخ البدء"
