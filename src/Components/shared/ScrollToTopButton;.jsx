@@ -42,7 +42,7 @@ const ScrollToTopButton = () => {
         className='btn btn-primary'
         >
 
-            <i class="fa fa-arrow-circle-up fa-2x "></i>
+            <i className="fa fa-arrow-circle-up fa-2x "></i>
         </button>
     );
 };

@@ -3,14 +3,14 @@ import React from 'react'
 export default function Footer() {
   return (
      <footer id="footer" className="container-fluid text-white-50 ">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section">
+        <div className="container">
+            <div className="footer-grid">
+                <div className="footer-section">
                     <h4>عن المنصة</h4>
                     <p>منصة بنائك هي المنصة الأولى للخدمات الهندسية والعمارية في المنطقة</p>
                 </div>
 
-                <div class="footer-section">
+                <div className="footer-section">
                     <h4>روابط سريعة</h4>
                     <ul>
                         <li><a href="#home">الرئيسية</a></li>
@@ -20,7 +20,7 @@ export default function Footer() {
                     </ul>
                 </div>
 
-                <div class="footer-section">
+                <div className="footer-section">
                     <h4>الخدمات</h4>
                     <ul>
                         <li><a href="#">التصميم المعماري</a></li>
@@ -30,7 +30,7 @@ export default function Footer() {
                     </ul>
                 </div>
 
-                <div class="footer-section">
+                <div className="footer-section">
                     <h4>تواصل معنا</h4>
                     <p>
                         <i className="fa fa-map-marker ms-3"></i> 
@@ -38,23 +38,23 @@ export default function Footer() {
                     </p>
 
                     <p>
-                        <i class="fa fa-phone"></i>
+                        <i className="fa fa-phone"></i>
                         <a href="tel:+963-xx-xxxx-xxxx"> +963-xx-xxxx-xxxx</a>
                     </p>
                     <p>
-                        <i class="fa fa-envelope"></i>
+                        <i className="fa fa-envelope"></i>
                         <a href="mailto:info@bs.com"> info@bs.com </a>
                     </p>
-                    <div class="social-links">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-whatsapp"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                    <div className="social-links">
+                        <a href="#"><i className="fa fa-facebook"></i></a>
+                        <a href="#"><i className="fa fa-whatsapp"></i></a>
+                        <a href="#"><i className="fa fa-instagram"></i></a>
+                        <a href="#"><i className="fa fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
 
-            <div class="footer-bottom">
+            <div className="footer-bottom">
                 <p>&copy; 2025 منصة بنائك. جميع الحقوق محفوظة.</p>
             </div>
         </div>
