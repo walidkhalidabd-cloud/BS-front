@@ -1,0 +1,152 @@
+/* التصميم الرئيسي */
+.slider-container {
+  display: flex;
+  /* max-width: 1000px; */
+  margin: 100px auto 0 !important;  
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  min-height: 77vh;
+  column-gap: 3em;
+}
+
+/* القسم الخاص بالنص */
+.text-section {
+  width: 50%;
+  margin-left: 100px;
+  color: #082224;
+  box-sizing: border-box;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 2em;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--primary-color);
+}
+
+.highlight {
+  color: var(--secondary-color);
+  font-size: 2em;
+}
+
+.subtitle {
+  margin-top: 20px;
+  padding: 12px 24px;
+  max-width: 320px;
+  border: 1px solid white;
+  background: rgba(255, 255, 255, 0.4);
+  font-size: 16px;
+}
+.main-btn {
+  background-color: var(--secondary-color);
+  font-size: 1em;
+}
+.main-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+/* القسم الخاص بالسلايدر */
+.slider-wrapper{
+  width: 40%;
+}
+.slider-section {
+ width: 250px;
+
+  position: relative;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 20px 10px;
+  right: 200px;
+}
+
+.slider-image {
+  width: 500px;
+  height: 70vh;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  object-fit: cover;
+  position: relative;
+  left: 200px;
+  text-align: center;
+}
+.slider-image img{
+  right: 100px; 
+  width: 600px !important;
+
+}
+/* النقاط الجانبية */
+.dots-wrapper {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border: 2px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.4s ease;
+}
+
+.dot.active {
+  width: 14px;
+  height: 42px;
+  background-color: var(--secondary-color) !important;
+  border: 2px solid white;
+  border-color: var(--secondary-color);
+  border-radius: 6px;
+}
+
+/* تأثير الانتقال (Fade In) */
+.fade-in {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* استجابة التصميم للأجهزة الأصغر */
+@media (max-width: 768px) {
+  .slider-container {
+    flex-direction: column-reverse;
+    max-width: 90%;
+  }
+  .text-section, .slider-section {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+  }
+  .dots-wrapper {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 16px;
+    transform: none;
+  }
+  .dot.active {
+    height: 14px;
+    width: 42px;
+  }
+}
