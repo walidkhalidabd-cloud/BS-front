@@ -26,14 +26,17 @@ export default function AddProject() {
   };
 
   const handleSelectChange = (selectedOption, { name }) => {
-    setFormData({ ...formData, [name]: selectedOption.id });
+    setFormData({ ...formData, [name]: selectedOption });    
+    // console.log(formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);    
+    formData.project_type_id = formData.project_type_id ? formData.project_type_id.id : null;
+    setLoading(true);        
     // console.log(formData);
-    try {
+
+    try {      
       const data = await apiProjects.add(formData);
       alert('تم إضافة مشروعك بنجاح')
       navigate("/");
