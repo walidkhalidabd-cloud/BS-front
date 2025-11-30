@@ -31,5 +31,6 @@ const makeApiRequest = async (verb, url, data = null) => {
 /*********************** add project ******************** */
 export const projects = {
   add: async (data) => makeApiRequest('post', '/projects' , data),
+  list: async (data) => makeApiRequest('get', '/projects' ),
   type: async () => makeApiRequest('get', '/project-types' )
 }
