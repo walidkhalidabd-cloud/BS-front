@@ -6,14 +6,11 @@ body {
 .main-container {
   padding: 0 5% !important;
 }
-h1 {
-  font-size: 2em !important;
+.mt-7 {
+  margin-top: 4em;
 }
-h2 {
-  font-size: 1.8em !important;
-}
-h3 {
-  font-size: 1.5em !important;
+.h-50vh{
+  height: 90vh ;
 }
 .h45 {
   height: 45px;
@@ -31,6 +28,7 @@ h3 {
 body {
   direction: rtl;
   line-height: 1.5;
+  font-size: 1.2em;
 }
 a,
 a:hover {
@@ -73,7 +71,6 @@ a:hover {
 #MainNavBar {
   position: fixed;
   z-index: 99;
-  font-size: 1.5em;
   background-color: var(--primary-light);
   color: var(--primary-color);
   padding: 0 !important;
@@ -184,6 +181,33 @@ a.active {
 
 .newsletter img {
   height: 600px;
+}
+
+/* ********** provider cards */
+
+.provider-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 12px;  
+}
+.provider-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);  
+}
+.provider-card .label {
+  font-size: 20px;
+  /* color: #888; */
+  font-weight: 600;
+}
+.provider-card .value {
+  font-size: 30px;
+  font-weight: 700;
+}
+.provider-icon{
+  font-size: 3.5em;
 }
 
 /* **********form */

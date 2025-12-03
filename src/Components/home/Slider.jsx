@@ -22,9 +22,9 @@ const Slider = () => {
 
   return (
     <div id="cover" className="slider-container container main-container">
-      <div className="text-section">
+      <div className="text-section d-flex flex-column flex-center">
         <h1 className="title">
-          أبدأ بتجهيز منشاتك مع منصة بناءك
+          أبدأ بتجهيز منشاتك مع منصة بناءك <br />
           <span className="highlight "> BS </span>
         </h1>
         <Link to="add-project" className="btn main-btn mt-3">ابدأ مشروعك</Link>
