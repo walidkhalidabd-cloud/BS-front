@@ -9,6 +9,7 @@ import AddProject from "./pages/home/partials/AddProject";
 import HomeProvider from "./pages/provider/Home";
 import HomeMainProvider from "./pages/provider/partials/HomeMain";
 import Projects from "./pages/provider/partials/Projects";
+import ProjectDetails from "./pages/provider/partials/ProjectDetails";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "projects/:status",
         element: <Projects />,
+      },      
+      {
+        path: "project-details/:project_id",
+        element: <ProjectDetails />,
       },      
       {
         path: "add-offer",

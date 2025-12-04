@@ -11,10 +11,11 @@ const MyInput = ({ type, placeholder, name , value, onChange }) => {
             onChange={onChange}
             style={{
                 padding: '10px',
-                margin: '10px 0',
+                margin: '2px 0.5% ',
                 border: '1px solid #ccc',
                 borderRadius: '4px',
-                width: '100%',
+                height: "2.3em",
+                width: "48%"
             }}
         />
     );

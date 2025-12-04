@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function MainNavBar() {
   return (
@@ -45,12 +46,12 @@ export default function MainNavBar() {
             <i className="fa fa-user me-2"></i>
           </small>
         </a>
-        <a href="#">
+        <Link to="/provider">
           <small className="me-3 text-light">
             دخول
             <i className="fa fa-sign-in me-2"></i>
           </small>
-        </a>
+        </Link>
       </nav>
     </div>
   );
