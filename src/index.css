@@ -70,24 +70,40 @@ a:hover {
 /* ************** main-navbar ***************/
 #MainNavBar {
   position: fixed;
-  z-index: 99;
-  background-color: var(--primary-light);
-  color: var(--primary-color);
+  z-index: 99;  
+  color: white;
   padding: 0 !important;
+  height: 50px;
+  background-color: var(--primary-color);
 }
-.navbar a {
-  color: inherit;
+.navbar{
+  align-items: flex-start ;  
+}
+.navbar a{
+  color: white;
   transition: 0.5s;
+  padding-top: 0;
 }
 .navbar a:hover {
-  color: white;
+  color: var(--primary-light-2);
   transform: scale(1.05);
 }
-a.active {
-  color: var(--secondary-color);
-  /* color: white !important; */
+.active {
+  color: var(--secondary-color) !important;
 }
-
+.left-nav{
+  align-items: flex-start;
+  padding-bottom: .5em;
+}
+.logo{
+  background-color: rgb(100, 117, 173);
+  /* box-shadow: 2px 3px 10px ; */
+  height: 62px;
+  margin-left: 2em;
+  position: relative;
+  bottom: .4em;
+  border-radius: 5px;
+}
 /* ************ cover *************** */
 .highlight {
   color: var(--secondary-color);
@@ -180,7 +196,7 @@ a.active {
   }
 
 .newsletter img {
-  height: 600px;
+  height: 520px;
 }
 
 /* ********** provider cards */
@@ -224,4 +240,49 @@ a.active {
   width: 110px;
   margin-left: 1em;
   border-radius: 10px;
+}
+
+/* ********** select */
+.pt-\.5{
+  padding-top: 0.2em ;
+}
+.ps-3\.5{
+  padding-left: 1.2em;
+}
+.pe-2\.5{
+  padding-right: .6em;
+}
+/* نفس أبعاد MyInput (Bootstrap input height = 38px) */
+.react-select__control {
+  height: 45px !important;
+  min-height: 45px !important;  
+  border-radius: 8px !important;
+  border-color: #ced4da !important;
+  box-shadow: none !important;
+}
+
+/* النص داخل select */
+.react-select__value-container {
+  padding: 2px 8px !important;
+}
+
+/* السهم */
+.react-select__indicator {
+  padding: 5px !important;
+}
+
+
+/* filerow */
+.card {  
+  padding: .2em 1em 0em;
+  font-size: .8em;
+}
+.file-control{
+  padding: 8px 16px;
+  height: 44px;
+}
+.bg-primary2{
+  background-color: transparent;
+  border: none;
+  box-shadow: 1px 1px 3px rgb(88, 117, 212);
 }

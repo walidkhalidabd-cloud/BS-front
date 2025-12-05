@@ -1,24 +1,19 @@
 // Input.js
-import React from 'react';
+import React from "react";
 
-const MyInput = ({ type, placeholder, name , value, onChange }) => {
-    return (
-        <input
-            type={type??'text'}
-            name={name}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            style={{
-                padding: '10px',
-                margin: '2px 0.5% ',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                height: "2.3em",
-                width: "48%"
-            }}
-        />
-    );
+const MyInput = ({ type, placeholder, name, value, onChange }) => {
+  return (
+    <div className="col-6 py-1">
+      <input
+        className="form-control"
+        type={type ?? "text"}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}        
+      />
+    </div>
+  );
 };
 
 export default MyInput;

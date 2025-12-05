@@ -1,20 +1,31 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function MainNavBar() {
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        // إزاحة الأزرار للأعلى عند التمرير
+        document.getElementById("MainNavBar").style.backgroundColor =
+          "#1e4770c2";
+      } else {
+        document.getElementById("MainNavBar").style.backgroundColor = "#1e4770";
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // تنظيف الحدث عند تفكيك المكون
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-    <div id="MainNavBar" className="container-fluid p-0 top-0 fs-4">
-      <nav className="navbar navbar-expand-lg navbar-light py-0 px-4 px-lg-5  ">
-        <a href="" className="navbar-brand p-0">
-          <h3 className="m-0 ms-4">
-            <img
-              src="images/logo.png"
-              alt=""
-              width="50"
-              className="px-1 py-2 "
-            />
-          </h3>
-        </a>
+    <div id="MainNavBar" className="container-fluid p-0  fs-4 top-0">
+      <nav className="navbar navbar-expand-lg px-lg-5">
+        <Link to="/" className="navbar-brand p-0">
+          <img src="/images/logo.png" alt="" width="50" className="logo p-1 " />
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -24,34 +35,32 @@ export default function MainNavBar() {
           <span className="fa fa-bars"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
-          <div className="navbar-nav ms-auto py-0">
-            <a href="index.html" className="nav-item nav-link active">
+          <div className="navbar-nav ms-auto py-0 fs-4">
+            <NavLink to="/" className="nav-item nav-link" end>
               الرئيسية
-            </a>
-            <a href="about.html" className="nav-item nav-link">
+            </NavLink>
+            <NavLink to="/x#" className="nav-item nav-link">
               حول المنصة
-            </a>
-            <a href="services.html" className="nav-item nav-link">
+            </NavLink>
+            <NavLink to="/x#" className="nav-item nav-link">
               الخدمات
+            </NavLink>
+
+            <NavLink to="/x#" className="nav-item nav-link">
+              اتصل بنا
+            </NavLink>
+          </div>
+          <div className="d-flex left-nav">
+            <a href="#" className="nav-item nav-link">
+              اشترك
             </a>
 
-            <a href="contact.html" className="nav-item nav-link">
-              اتصل بنا
-            </a>
+            <Link to="/provider" className="me-3 nav-item nav-link" title="دخول كمزود خدمة">
+              دخول
+              <i className="fa fa-sign-in"></i>
+            </Link>
           </div>
         </div>
-        <a href="#">
-          <small className="me-3 text-light">
-            اشترك
-            <i className="fa fa-user me-2"></i>
-          </small>
-        </a>
-        <Link to="/provider">
-          <small className="me-3 text-light">
-            دخول
-            <i className="fa fa-sign-in me-2"></i>
-          </small>
-        </Link>
       </nav>
     </div>
   );
