@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "../../../Components/shared/Alert";
 import Loading from "../../../Components/shared/Loading";
+import { toast } from "react-toastify";
 
 export default function AddProject() {
   const navigate = useNavigate();
@@ -13,8 +14,8 @@ export default function AddProject() {
   const [loading, setLoading] = useState(false);
   const [projectTypes, setProjectTypes] = useState([]);
   const [documentTypes, setDocumentTypes] = useState([]);
-  const [successMsg, setSuccessMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  // const [successMsg, setSuccessMsg] = useState("");
+  // const [errorMsg, setErrorMsg] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
 
   // One simple state for all form fields
@@ -100,8 +101,8 @@ export default function AddProject() {
     e.preventDefault();
     setLoading(true);
 
-    setSuccessMsg("");
-    setErrorMsg("");
+    // setSuccessMsg("");
+    // setErrorMsg("");
     setValidationErrors({});
 
     try {
@@ -132,12 +133,13 @@ export default function AddProject() {
       const response = await apiProjects.add(fd);
 
       if (response.success && response.status === 200) {
-        setSuccessMsg("تم إضافة مشروعك بنجاح");
+        // setSuccessMsg("تم إضافة مشروعك بنجاح");
+        toast.success("تم إضافة مشروعك بنجاح");
         setValidationErrors({});
-        setErrorMsg("");
+        // setErrorMsg("");
 
-        // navigate after brief delay
-        setTimeout(() => navigate("/"), 1200);
+        
+         navigate("/");
         setLoading(false);
         return;
       }
@@ -147,15 +149,17 @@ export default function AddProject() {
         // response.data is expected to be the errors object
         const normalized = normalizeValidationErrors(response.data || {});
         setValidationErrors(normalized);
-        setErrorMsg("بعض الحقول غير صحيحة، تحقق من الأخطاء أدناه.");
+        // setErrorMsg("بعض الحقول غير صحيحة، تحقق من الأخطاء أدناه.");
+        toast.error("بعض الحقول غير صحيحة، تحقق من الأخطاء أدناه.");
         setLoading(false);
         return;
       }
 
       // Other errors
-      setErrorMsg(response.msg || "حدث خطأ. حاول لاحقاً.");
+        toast.error("حدث خطأ. حاول لاحقاً.");
+      // setErrorMsg(response.msg || "حدث خطأ. حاول لاحقاً.");
     } catch (err) {
-      setErrorMsg("الخادم غير متوفر حالياً. يرجى المحاولة لاحقاً.");
+        toast.error("الخادم غير متوفر حالياً. يرجى المحاولة لاحقاً.");
     } finally {
       setLoading(false);
     }
@@ -167,12 +171,13 @@ export default function AddProject() {
       // fetch project types
       const types = await apiProjects.types();
       if (types.success) setProjectTypes(types.data);
-      else setErrorMsg(types.msg || "تعذر جلب أنواع المشاريع.");
+      
+      else toast.error(types.msg || "تعذر جلب أنواع المشاريع.");
 
       // fetch document types
       const docs = await apiProjects.documentTypes();
       if (docs.success) setDocumentTypes(docs.data);
-      else setErrorMsg(docs.msg || "تعذر جلب أنواع المستندات.");
+      else toast.error(docs.msg || "تعذر جلب أنواع المستندات.");
 
       setLoading(false);
     }
@@ -187,10 +192,7 @@ export default function AddProject() {
         </div>
 
         <div className="col-md-7 py-5 position-relative">
-          {loading && <Loading />}
-
-          {errorMsg && <Alert msg={errorMsg} color="warning" />}
-          {successMsg && <Alert msg={successMsg} color="primary" />}
+          {loading && <Loading />}          
 
           <form onSubmit={handleSubmit} className="p-4 mb-5" noValidate>
             <h3 className="text-white text-center fs-3">
