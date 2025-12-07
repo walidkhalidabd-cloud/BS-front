@@ -37,9 +37,10 @@ const ScrollToTopButton = () => {
                 bottom: '20px',
                 right: '20px',                                
                 borderRadius: '5px',
-                cursor: 'pointer',                
+                cursor: 'pointer',   
+                padding: '.3em .75em'             
             }}
-        className='btn btn-primary'
+        className='btn btn-secondary'
         >
 
             <i className="fa fa-arrow-circle-up fa-2x "></i>

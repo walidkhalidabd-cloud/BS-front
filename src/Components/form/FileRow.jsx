@@ -8,7 +8,9 @@ export default function FileRow({
   onMetaChange,
   onTypeChange,
   onRemove,
+  errors = {}  
 }) {
+  // console.log(errors)
   return (
     <div className="card bg-primary2 my-2" >
 
@@ -19,8 +21,9 @@ export default function FileRow({
           <input
             className="file-control form-control"
             type="file"
-            onChange={(e) => onFileChange(index, e)}
+            onChange={(e) => onFileChange(index, e)}            
           />
+          {errors.file && <small className="text-warning">{errors.file[0]}</small>}
         </div>
 
         {/* Document Type */}
@@ -29,13 +32,14 @@ export default function FileRow({
             className="react-select-container"
             classNamePrefix="react-select"
             name="type"
-            value={data.type}
+            value={data.type}            
             options={documentTypes}
             getOptionLabel={(o) => o.name}
             getOptionValue={(o) => o.id}
             onChange={(selected) => onTypeChange(index, selected)}
             placeholder="اختر النوع"
           />
+          {errors.type && <small className="text-warning">{errors.type[0]}</small>}
         </div>
 
         {/* Description */}
@@ -46,8 +50,9 @@ export default function FileRow({
             name="description"
             value={data.description}
             placeholder="وصف الملف"
-            onChange={(e) => onMetaChange(index, e)}
-          />
+            onChange={(e) => onMetaChange(index, e)}            
+            />
+            {errors.description && <small className="text-warning">{errors.description[0]}</small>}
         </div>
 
         {/* Remove Button */}

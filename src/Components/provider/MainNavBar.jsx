@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 export default function MainNavBar() {
   return (
     <>
-      <div id="MainNavBar" className="container-fluid p-0 top-0">
+      <div id="MainNavBar" className="container-fluid p-0">
         <nav className="navbar navbar-expand-lg px-lg-5">
           <Link to="/" className="navbar-brand p-0">
             <img

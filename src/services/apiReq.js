@@ -25,18 +25,40 @@ const sendRequest = async (
       headers: {
         "Content-Type": contentType,
       },
-    });
-    return { success: true, status: response.status, data: response.data.data }; // Return only the data part
+    });    
+    return {
+      success: true,
+      status: response.status,
+      msg: "",
+      data: response.data.data,
+    };
+    // the server responded with a status code out of 2xx 
   } catch (error) {
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-        return { success: false, status: error.response.status, data: error.response.data }; // Return only the data part      
-    } else 
-      // The request was made but no response was received
-      return { success: false, status: "no response", data: error.request }; // Return only the data part      
-    }    
+      // the server responded with 422
+    if (error.status == 422)      
+      return {
+        success: false,
+        status: error.status,
+        msg: "بعض الحقول غير صحيحة، يرجى التحقق.",
+        data: error.response.data.errors,
+      };
+      // the server responded with othor
+     else if (error.response)     
+      return {
+        success: false,
+        status: response.status,
+        msg: "حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.",
+        data: error.response.data,
+      }; 
+     else 
+      return {
+        success: false,
+        status: "no response",
+        msg: "الخادم غير متوفر حالياً. يرجى المحاولة لاحقاً.",
+        data: error.request,
+      };    
   }
+};
 
 /*********************** add project ******************** */
 export const projects = {

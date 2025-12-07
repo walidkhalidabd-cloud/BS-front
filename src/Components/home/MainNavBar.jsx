@@ -21,7 +21,7 @@ export default function MainNavBar() {
     };
   }, []);
   return (
-    <div id="MainNavBar" className="container-fluid p-0  fs-4 top-0">
+    <div id="MainNavBar" className="container-fluid p-0  fs-4">
       <nav className="navbar navbar-expand-lg px-lg-5">
         <Link to="/" className="navbar-brand p-0">
           <img src="/images/logo.png" alt="" width="50" className="logo p-1 " />

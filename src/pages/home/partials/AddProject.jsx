@@ -4,6 +4,8 @@ import MyInput from "../../../components/form/MyInput";
 import FileRow from "../../../Components/form/FileRow";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Alert from "../../../Components/shared/Alert";
+import Loading from "../../../Components/shared/Loading";
 
 export default function AddProject() {
   const navigate = useNavigate();
@@ -11,6 +13,9 @@ export default function AddProject() {
   const [loading, setLoading] = useState(false);
   const [projectTypes, setProjectTypes] = useState([]);
   const [documentTypes, setDocumentTypes] = useState([]);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [validationErrors, setValidationErrors] = useState({});
 
   // One simple state for all form fields
   const [formData, setFormData] = useState({
@@ -23,106 +28,174 @@ export default function AddProject() {
     project_type_id: "",
   });
 
-  const [filesData, setFilesData] = useState([    
-  ]);
-  
+  const [filesData, setFilesData] = useState([]);
+
+  // Helpers
+  const normalizeValidationErrors = (errors) => {
+    // errors is expected like: { "start_date": [...], "documents.0.type": [...], ... }
+    // We convert documents.*.* into grouped objects: validationErrors["documents.0"] = { type: [...], file: [...] }
+    const normalized = {};
+    if (!errors || typeof errors !== "object") return normalized;
+
+    Object.entries(errors).forEach(([key, value]) => {
+      // key like: documents.0.type  OR start_date
+      if (key.startsWith("documents.")) {
+        // split into parts
+        const parts = key.split("."); // ["documents","0","type"]
+        if (parts.length >= 3) {
+          const groupKey = `${parts[0]}.${parts[1]}`; // "documents.0"
+          const field = parts.slice(2).join("."); // in case deeper, usually "type" or "file" or "description"
+          if (!normalized[groupKey]) normalized[groupKey] = {};
+          normalized[groupKey][field] = value;
+        } else {
+          // fallback, put as top-level
+          normalized[key] = value;
+        }
+      } else {
+        normalized[key] = value; // other fields remain
+      }
+    });
+
+    return normalized;
+  };
+
   // Generic input handler
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSelectChange = (selected, name) => {
-    setFormData({ ...formData, [name]: selected });
+    setFormData((prev) => ({ ...prev, [name]: selected }));
   };
 
   // File row handlers
   const handleFileChange = (i, e) => {
     const updated = [...filesData];
-    updated[i].file = e.target.files[0];
+    updated[i] = { ...(updated[i] || {}), file: e.target.files[0] || null };
     setFilesData(updated);
   };
 
   const handleFileMeta = (i, e) => {
     const { name, value } = e.target;
     const updated = [...filesData];
-    updated[i][name] = value;
+    updated[i] = { ...(updated[i] || {}), [name]: value };
     setFilesData(updated);
   };
 
   const handleFileType = (i, selected) => {
     const updated = [...filesData];
-    updated[i].type = selected;
+    updated[i] = { ...(updated[i] || {}), type: selected };
     setFilesData(updated);
   };
 
   const removeFileRow = (index) => {
-  setFilesData((prev) => prev.filter((_, i) => i !== index));
-};
+    setFilesData((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const addFileInput = () =>
-    setFilesData([...filesData, { file: null, type: "", description: "" }]);
+    setFilesData((prev) => [...prev, { file: null, type: "", description: "" }]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Prepare FormData
-    const fd = new FormData();
+    setSuccessMsg("");
+    setErrorMsg("");
+    setValidationErrors({});
 
-    // Convert select objects to IDs
-    fd.append("project_type_id", formData.project_type_id?.id || null);
+    try {
+      // Prepare FormData
+      const fd = new FormData();
 
-    Object.keys(formData).forEach((key) => {
-      if (key !== "project_type_id") {
-        fd.append(key, formData[key]);
+      // Convert select objects to IDs (send empty string if none)
+      fd.append("project_type_id", formData.project_type_id?.id ?? "");
+
+      Object.keys(formData).forEach((key) => {
+        if (key !== "project_type_id") {
+          fd.append(key, formData[key] ?? "");
+        }
+      });
+
+      // Always append documents fields (even if empty) so Laravel sees the keys
+      // This ensures validation rules like 'documents.*.type' will trigger.
+      filesData.forEach((f, i) => {
+        // append file (may be null -> append empty string)
+        fd.append(`documents[${i}][file]`, f?.file ?? "");
+        // append type id or empty
+        fd.append(`documents[${i}][type]`, f?.type?.id ?? "");
+        // append description or empty
+        fd.append(`documents[${i}][description]`, f?.description ?? "");
+      });
+
+      // Call API
+      const response = await apiProjects.add(fd);
+
+      if (response.success && response.status === 200) {
+        setSuccessMsg("تم إضافة مشروعك بنجاح");
+        setValidationErrors({});
+        setErrorMsg("");
+
+        // navigate after brief delay
+        setTimeout(() => navigate("/"), 1200);
+        setLoading(false);
+        return;
       }
-    });
 
-    // Fake nested documents[]
-    filesData.forEach((f, i) => {
-      if (f.file) {
-        fd.append(`documents[${i}][file]`, f.file);
-        fd.append(`documents[${i}][type]`, f.type?.id || null);
-        fd.append(`documents[${i}][description]`, f.description);
+      // If validation errors
+      if (response.status === 422) {
+        // response.data is expected to be the errors object
+        const normalized = normalizeValidationErrors(response.data || {});
+        setValidationErrors(normalized);
+        setErrorMsg("بعض الحقول غير صحيحة، تحقق من الأخطاء أدناه.");
+        setLoading(false);
+        return;
       }
-    });
 
-    const response = await apiProjects.add(fd);
-
-    if (response.success && response.status === 200) {
-      alert("تم إضافة مشروعك بنجاح");
-      navigate("/provider/projects/1");
-    } else {
-      console.log(response.data);
+      // Other errors
+      setErrorMsg(response.msg || "حدث خطأ. حاول لاحقاً.");
+    } catch (err) {
+      setErrorMsg("الخادم غير متوفر حالياً. يرجى المحاولة لاحقاً.");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   useEffect(() => {
     async function load() {
+      setLoading(true);
+      // fetch project types
       const types = await apiProjects.types();
       if (types.success) setProjectTypes(types.data);
+      else setErrorMsg(types.msg || "تعذر جلب أنواع المشاريع.");
 
+      // fetch document types
       const docs = await apiProjects.documentTypes();
       if (docs.success) setDocumentTypes(docs.data);
+      else setErrorMsg(docs.msg || "تعذر جلب أنواع المستندات.");
+
+      setLoading(false);
     }
     load();
   }, []);
 
   return (
-    <div className="container bg-primary newsletter pt-5">
+    <div className="container-fluid bg-primary newsletter pt-5">
       <div className="row g-0">
         <div className="col-md-5 p-5">
-          <img className="img-fluid w-100" src="/images/request.jpg" />
+          <img className="img-fluid w-100" src="/images/request.jpg" alt="cover" />
         </div>
 
-        <div className="col-md-7 py-5">
-          <form onSubmit={handleSubmit} className="p-4 mb-5">
+        <div className="col-md-7 py-5 position-relative">
+          {loading && <Loading />}
+
+          {errorMsg && <Alert msg={errorMsg} color="warning" />}
+          {successMsg && <Alert msg={successMsg} color="primary" />}
+
+          <form onSubmit={handleSubmit} className="p-4 mb-5" noValidate>
             <h3 className="text-white text-center fs-3">
               بدء مشروع جديد مع
-              <span className="text-secondary px-2">منصة بناءك</span>
+              <span className="text-secondary px-2"> منصة بناءك </span>
             </h3>
 
             <div className="row">
@@ -131,28 +204,33 @@ export default function AddProject() {
                 type="date"
                 placeholder="تاريخ البدء"
                 onChange={handleChange}
+                error={validationErrors.start_date}
               />
               <MyInput
                 name="duration"
                 type="number"
                 placeholder="المدة بالأشهر"
                 onChange={handleChange}
+                error={validationErrors.duration}
               />
               <MyInput
                 name="area"
                 type="number"
                 placeholder="المساحة (km)"
                 onChange={handleChange}
+                error={validationErrors.area}
               />
               <MyInput
                 name="location_details"
                 placeholder="العنوان"
                 onChange={handleChange}
+                error={validationErrors.location_details}
               />
               <MyInput
                 name="building_no"
                 placeholder="رقم البناء"
                 onChange={handleChange}
+                error={validationErrors.building_no}
               />
 
               <div className="col-6 pt-.5 pe-2.5 text-black">
@@ -169,6 +247,11 @@ export default function AddProject() {
                   }
                   placeholder="اختر نوع المشروع"
                 />
+                {validationErrors.project_type_id && (
+                  <small className="text-warning">
+                    {validationErrors.project_type_id[0]}
+                  </small>
+                )}
               </div>
 
               <div className="col-12 mt-1">
@@ -178,6 +261,11 @@ export default function AddProject() {
                   placeholder="وصف المشروع..."
                   onChange={handleChange}
                 />
+                {validationErrors.description && (
+                  <small className="text-warning">
+                    {validationErrors.description[0]}
+                  </small>
+                )}
               </div>
             </div>
 
@@ -189,6 +277,7 @@ export default function AddProject() {
               <i className="fa fa-plus"></i> إضافة ملف
             </button>
 
+            {/* Files rows */}
             {filesData.map((file, i) => (
               <FileRow
                 key={i}
@@ -198,12 +287,13 @@ export default function AddProject() {
                 onFileChange={handleFileChange}
                 onMetaChange={handleFileMeta}
                 onTypeChange={handleFileType}
-                onRemove={removeFileRow} 
+                onRemove={removeFileRow}
+                errors={validationErrors[`documents.${i}`]} // pass per-row errors
               />
             ))}
 
             <div className="text-center">
-              <button className="btn btn-secondary mt-3" type="submit">
+              <button className="btn btn-secondary mt-3" type="submit" disabled={loading}>
                 {loading ? "جاري الإضافة..." : "إضافة مشروع"}
               </button>
 
