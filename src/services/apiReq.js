@@ -25,38 +25,38 @@ const sendRequest = async (
       headers: {
         "Content-Type": contentType,
       },
-    });    
+    });
     return {
       success: true,
       status: response.status,
       msg: "",
       data: response.data.data,
     };
-    // the server responded with a status code out of 2xx 
+    // the server responded with a status code out of 2xx
   } catch (error) {
-      // the server responded with 422
-    if (error.status == 422)      
+    // the server responded with 422
+    if (error.status == 422)
       return {
-        success: false,
         status: error.status,
+        success: false,
         msg: "بعض الحقول غير صحيحة، يرجى التحقق.",
         data: error.response.data.errors,
       };
-      // the server responded with othor
-     else if (error.response)     
+    // the server responded with othor
+    else if (error.response)
       return {
         success: false,
-        status: response.status,
+        status: error.status,
         msg: "حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.",
         data: error.response.data,
-      }; 
-     else 
+      };
+    else
       return {
         success: false,
         status: "no response",
         msg: "الخادم غير متوفر حالياً. يرجى المحاولة لاحقاً.",
         data: error.request,
-      };    
+      };
   }
 };
 

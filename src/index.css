@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
 
 body {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: sans-serif;
   background-color: var(--primary-light-2);
   font-size: 24px;  
 }
@@ -15,6 +15,12 @@ h1,h2 ,h3,h4,h5,h5 {
 }
 .mt-7 {
   margin-top: 4em;
+}
+.mt-200 {
+  margin-top: 200px;
+}
+.mb-100 {
+  margin-bottom: 100px;
 }
 .h-50vh{
   min-height: 90vh ;
@@ -138,7 +144,7 @@ a:hover {
 #footer {
   background: var(--primary-dark);
   color: white;
-  padding: var(--spacing-3xl) var(--spacing-2xl) var(--spacing-base);
+  padding: var(--spacing-base) var(--spacing-2xl) ;
 }
 
 .footer-grid {

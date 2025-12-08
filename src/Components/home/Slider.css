@@ -1,45 +1,28 @@
-/* التصميم الرئيسي */
+/* جعل التصميم متجاوب بالكامل مع الحفاظ على الشكل الأصلي */
+
 .slider-container {
-  display: flex;
-  /* max-width: 1000px; */
-  margin: 100px auto 0 !important;  
-  border-radius: 10px;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
+  margin: 100px 5% 0 10%;
   min-height: 77vh;
-  column-gap: 3em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* القسم الخاص بالنص */
 .text-section {
-  width: 50%;
-  margin-left: 100px;
+  width: 45%;
   color: #082224;
-  box-sizing: border-box;
-  align-items: center;
   text-align: center;
 }
 
 .title {
   font-weight: 700;
   font-size: 2em;
-  margin: 0;
-  line-height: 1.2;
   color: var(--primary-color);
 }
 
 .highlight {
   color: var(--secondary-color);
   font-size: 2em;
-}
-
-.subtitle {
-  margin-top: 20px;
-  padding: 12px 24px;
-  max-width: 320px;
-  border: 1px solid white;
-  background: rgba(255, 255, 255, 0.4);
-  font-size: 16px;
 }
 .main-btn {
   background-color: var(--secondary-color);
@@ -49,42 +32,39 @@
   background-color: var(--primary-color);
   color: white;
 }
-/* القسم الخاص بالسلايدر */
-.slider-wrapper{
-  width: 40%;
-}
-.slider-section {
- width: 250px;
 
-  position: relative;
-  background-color: var(--primary-color);
+/* السلايدر */
+.slider-wrapper {
+  width: 45%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 20px 10px;
-  right: 200px;
+  justify-content: flex-end;
+  margin-left: 10%;
+}
+
+.img-wrapper {
+  width: 40%;
+  height: 70vh;
+  background-color: var(--primary-color);
+  position: relative;
+  padding: 20px;
 }
 
 .slider-image {
-  width: 500px;
-  height: 70vh;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  object-fit: cover;
-  position: relative;
-  left: 200px;
-  text-align: center;
-}
-.slider-image img{
-  right: 100px; 
-  width: 600px !important;
-
-}
-/* النقاط الجانبية */
-.dots-wrapper {
+  width: 220%;
   position: absolute;
-  left: 18px;
+  left: 60px;
+  height: calc(70vh - 40px);
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  
+}
+
+/* النقاط */
+.dots-wrapper {
+  width: 2vw;
+  position: absolute;
+  left: 0.5vw;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -105,13 +85,11 @@
 .dot.active {
   width: 14px;
   height: 42px;
-  background-color: var(--secondary-color) !important;
-  border: 2px solid white;
+  background-color: var(--secondary-color);
   border-color: var(--secondary-color);
-  border-radius: 6px;
 }
 
-/* تأثير الانتقال (Fade In) */
+/* تأثير الانتقال */
 .fade-in {
   animation: fadeIn 0.8s ease forwards;
 }
@@ -127,26 +105,39 @@
   }
 }
 
-/* استجابة التصميم للأجهزة الأصغر */
-@media (max-width: 768px) {
+/* استجابة الأجهزة الصغيرة */
+@media (max-width: 992px) {
   .slider-container {
     flex-direction: column-reverse;
-    max-width: 90%;
+    margin: 0;
   }
-  .text-section, .slider-section {
+
+  .slider-wrapper {
+    width: 80%;
+  }
+  .text-section {
     width: 100%;
-    padding: 20px;
-    text-align: center;
+    margin: 0 ;
+  }
+}
+
+@media (max-width: 768px) {
+  .img-wrapper {
+    width: 40%;
+  }
+.slider-image {
+  width: 200%;
+}
+  .slider-wrapper {
+    width: 80%;
+  }
+  .text-section {
+    width: 100%;
+    margin: 0;
   }
   .dots-wrapper {
-    position: static;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 16px;
-    transform: none;
-  }
-  .dot.active {
-    height: 14px;
-    width: 42px;
+    position: absolute;
+    width: 4vw;
+    left: 1vw;
   }
 }

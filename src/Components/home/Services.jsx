@@ -18,7 +18,7 @@ const servicesData = [
 ];
 export default function Services() {
   return (
-    <div id="services" className="container-fluid py-5 my-5 main-container">
+    <div id="services" className="container-fluid mt-200 mb-100 main-container">
       <div className="container">
         <div className="text-center">
           <h2 className="mb-5 text-secondary">الخدمات الرئيسية </h2>
@@ -26,7 +26,7 @@ export default function Services() {
         <div className="row g-5 align-items-center text-center">
           {servicesData.map((service, index) => (
             <div className="col-lg-4" key={index}>
-              <div className="card">
+              <div className="card" style={{ maxWidth: "400px" , margin: "auto"}}>
                 <span className="icon">
                   <i className={`fa ${service.icon} fa-5x mb-4`}></i>
                 </span>

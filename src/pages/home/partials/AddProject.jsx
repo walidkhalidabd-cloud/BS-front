@@ -4,7 +4,6 @@ import MyInput from "../../../components/form/MyInput";
 import FileRow from "../../../Components/form/FileRow";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Alert from "../../../Components/shared/Alert";
 import Loading from "../../../Components/shared/Loading";
 import { toast } from "react-toastify";
 
@@ -14,8 +13,6 @@ export default function AddProject() {
   const [loading, setLoading] = useState(false);
   const [projectTypes, setProjectTypes] = useState([]);
   const [documentTypes, setDocumentTypes] = useState([]);
-  // const [successMsg, setSuccessMsg] = useState("");
-  // const [errorMsg, setErrorMsg] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
 
   // One simple state for all form fields
@@ -95,83 +92,68 @@ export default function AddProject() {
   };
 
   const addFileInput = () =>
-    setFilesData((prev) => [...prev, { file: null, type: "", description: "" }]);
+    setFilesData((prev) => [
+      ...prev,
+      { file: null, type: "", description: "" },
+    ]);
 
+    /** **************** handleSubmit **********************/
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // setSuccessMsg("");
-    // setErrorMsg("");
     setValidationErrors({});
 
-    try {
-      // Prepare FormData
-      const fd = new FormData();
+    // Prepare FormData
+    const fd = new FormData();
 
-      // Convert select objects to IDs (send empty string if none)
-      fd.append("project_type_id", formData.project_type_id?.id ?? "");
+    // Convert select objects to IDs (send empty string if none)
+    fd.append("project_type_id", formData.project_type_id?.id ?? "");
 
-      Object.keys(formData).forEach((key) => {
-        if (key !== "project_type_id") {
-          fd.append(key, formData[key] ?? "");
-        }
-      });
-
-      // Always append documents fields (even if empty) so Laravel sees the keys
-      // This ensures validation rules like 'documents.*.type' will trigger.
-      filesData.forEach((f, i) => {
-        // append file (may be null -> append empty string)
-        fd.append(`documents[${i}][file]`, f?.file ?? "");
-        // append type id or empty
-        fd.append(`documents[${i}][type]`, f?.type?.id ?? "");
-        // append description or empty
-        fd.append(`documents[${i}][description]`, f?.description ?? "");
-      });
-
-      // Call API
-      const response = await apiProjects.add(fd);
-
-      if (response.success && response.status === 200) {
-        // setSuccessMsg("تم إضافة مشروعك بنجاح");
-        toast.success("تم إضافة مشروعك بنجاح");
-        setValidationErrors({});
-        // setErrorMsg("");
-
-        
-         navigate("/");
-        setLoading(false);
-        return;
+    Object.keys(formData).forEach((key) => {
+      if (key !== "project_type_id") {
+        fd.append(key, formData[key] ?? "");
       }
+    });
+
+    // Always append documents fields (even if empty) so Laravel sees the keys
+    // This ensures validation rules like 'documents.*.type' will trigger.
+    filesData.forEach((f, i) => {
+      // append file (may be null -> append empty string)
+      fd.append(`documents[${i}][file]`, f?.file ?? "");
+      // append type id or empty
+      fd.append(`documents[${i}][type]`, f?.type?.id ?? "");
+      // append description or empty
+      fd.append(`documents[${i}][description]`, f?.description ?? "");
+    });
+
+    // Call API
+    const response = await apiProjects.add(fd);
+
+    if (response.success && response.status === 200) {
+      toast.success("تم إضافة مشروعك بنجاح");
+      navigate("/");
 
       // If validation errors
-      if (response.status === 422) {
-        // response.data is expected to be the errors object
-        const normalized = normalizeValidationErrors(response.data || {});
-        setValidationErrors(normalized);
-        // setErrorMsg("بعض الحقول غير صحيحة، تحقق من الأخطاء أدناه.");
-        toast.error("بعض الحقول غير صحيحة، تحقق من الأخطاء أدناه.");
-        setLoading(false);
-        return;
-      }
-
+    } else if (response.status === 422) {
+      // response.data is expected to be the errors object
+      const normalized = normalizeValidationErrors(response.data || {});
+      setValidationErrors(normalized);
+      toast.error(response.msg);
       // Other errors
-        toast.error("حدث خطأ. حاول لاحقاً.");
-      // setErrorMsg(response.msg || "حدث خطأ. حاول لاحقاً.");
-    } catch (err) {
-        toast.error("الخادم غير متوفر حالياً. يرجى المحاولة لاحقاً.");
-    } finally {
+    } else
+      toast.error(response.msg);
+    
       setLoading(false);
-    }
   };
 
+    /** **************** loading initial values for lists **********************/
   useEffect(() => {
     async function load() {
       setLoading(true);
       // fetch project types
       const types = await apiProjects.types();
       if (types.success) setProjectTypes(types.data);
-      
       else toast.error(types.msg || "تعذر جلب أنواع المشاريع.");
 
       // fetch document types
@@ -188,11 +170,15 @@ export default function AddProject() {
     <div className="container-fluid bg-primary newsletter pt-5">
       <div className="row g-0">
         <div className="col-md-5 p-5">
-          <img className="img-fluid w-100" src="/images/request.jpg" alt="cover" />
+          <img
+            className="img-fluid w-100"
+            src="/images/request.jpg"
+            alt="cover"
+          />
         </div>
 
         <div className="col-md-7 py-5 position-relative">
-          {loading && <Loading />}          
+          {loading && <Loading />}
 
           <form onSubmit={handleSubmit} className="p-4 mb-5" noValidate>
             <h3 className="text-white text-center fs-3">
@@ -295,7 +281,11 @@ export default function AddProject() {
             ))}
 
             <div className="text-center">
-              <button className="btn btn-secondary mt-3" type="submit" disabled={loading}>
+              <button
+                className="btn btn-secondary mt-3"
+                type="submit"
+                disabled={loading}
+              >
                 {loading ? "جاري الإضافة..." : "إضافة مشروع"}
               </button>
 
