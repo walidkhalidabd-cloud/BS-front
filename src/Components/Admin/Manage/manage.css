@@ -1,0 +1,109 @@
+.navbar-brand {
+  left: 20px;
+}
+.navbar a,
+.navbar button {
+  color: white !important;
+}
+.navbar a:hover,
+.navbar button:hover,
+.dropdown-item:hover {
+  color: var(--primary-light-2) !important ;
+  text-shadow: 1px 1px 2px black;
+  background-color: transparent !important;
+  font-weight: 700;
+}
+.nav-item,
+.dropdown-item {
+  text-align: center !important;
+}
+a,
+a:hover {
+  text-decoration: none;
+}
+
+
+.admin-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+.admin-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.admin-card .label {
+  font-size: 20px;
+  color: #888;
+  font-weight: 600;
+}
+.admin-card .value {
+  font-size: 30px;
+  font-weight: 700;
+}
+.admin-icon {
+  font-size: 3.5em;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+/* =======================*/
+.admin-main {
+  flex: 1;
+  padding: 20px;
+  min-height: 92vh;
+  overflow: auto;
+  background-color: var(--warning-light-x2);
+}
+
+ .add-new{
+  background-color: var(--warning-light-x2);
+ }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #e9ebf5;
+  text-align: right;
+}
+.table thead th {
+  border-bottom: 1px solid #bcc0fd;
+}
+
+.empty-state {
+  padding: 16px;
+  text-align: center;
+  color: #666;
+}
+
+/* modal */
+.modal-overlay {
+position: fixed;
+top: 0; left: 0; right: 0; bottom: 0;
+background: rgba(0,0,0,0.5);
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.modal-box {
+background: white;
+padding: 20px;
+border-radius: 10px;
+width: 400px;
+}
+.file-field input {
+display: block;
+margin-top: 6px;
+}
+
+

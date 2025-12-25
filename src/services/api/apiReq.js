@@ -34,12 +34,12 @@ const sendRequest = async ({
       headers: {
         "Content-Type": contentType,
       },
-    });   
-    console.log(url, response); 
+    });  
+    // console.log("api response" , response); 
     return {
       success: true,
       status: response.status,
-      msg: "",
+      msg: response.data.message,
       data: response.data.data,
     };
     // the server responded with a status code out of 2xx 

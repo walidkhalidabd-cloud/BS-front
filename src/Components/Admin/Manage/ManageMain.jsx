@@ -1,0 +1,59 @@
+import { useState } from "react";
+import useManage from "../../../hooks/useManage";
+import ManageModal from "./ManageModal";
+import ManageTable from "./ManageTable";
+import "./manage.css";
+import Loading from "../../Shared/Loading";
+
+export default function ManageMain({ api, filter, fields }) {
+  const { items, loading, saving, save, remove , title  } = useManage(api , filter);
+  const [showModal, setShowModal] = useState(false);
+  const [activeRow, setActiveRow] = useState({});
+  function open(row = null) {
+    setActiveRow(
+      row || fields.reduce((acc, f) => ({ ...acc, [f.name]: "" }), {})
+    );
+    setShowModal(true);
+  }
+
+  async function handleClose(submit) {
+    if (submit) {
+      const ok = await save(activeRow);
+      if (ok) setShowModal(false);
+    } else {
+      setShowModal(false);
+    }
+  }
+
+  return (
+    <section className="dashboard-body">
+      <div className="d-flex justify-content-between align-items-center ">
+        <h3 className="text-warning">{title}</h3>
+          <button
+            className="btn btn-outline-warning add-new "
+            onClick={() => open()}
+          >
+            إضافة جديد
+          </button>
+      </div>
+
+      {loading && <Loading />}
+
+      <ManageTable
+        items={items}
+        fields={fields}
+        onEdit={(row) => open(row)}
+        onDelete={remove}
+      />
+
+      <ManageModal
+        show={showModal}
+        row={activeRow}
+        fields={fields}
+        onSave={setActiveRow}
+        onClose={handleClose}
+        saving ={saving}
+      />
+    </section>
+  );
+}

@@ -14,7 +14,7 @@
   --primary-light-2: #f0f4f8;
   --primary-light: #8aaaca;        /* أزرق فاتح - للـ Hover */
   --primary-color: #355274;        /* أزرق حديث - للعناصر الرئيسية */
-  --primary-dark: #203145;         /* أزرق غامق - للـ Active */
+  --primary-dark: #203145; 
   
   /* الألوان الثانوية */
   --secondary-color: #ff8a00;      /* برتقالي دافئ - للتنبيهات */
@@ -215,12 +215,12 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-.btn-success {
-  background: var(--success-color);
+.btn-waring {
+  background: var(--warning-color);
   color: white;
 }
 
-.btn-success:hover {
+.btn-waring:hover {
   background: #229954;
   box-shadow: var(--shadow-lg);
 }

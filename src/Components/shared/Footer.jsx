@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
   return (
-     <footer id="footer" className="container-fluid text-white-50 ">
+     <footer id="footer" className="container-fluid text-white-50">
         <div className="container">
             <div className="footer-grid">
                 <div className="footer-section">
