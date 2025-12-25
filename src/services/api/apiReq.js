@@ -10,13 +10,22 @@ const api = axios.create({
   timeout: 10000,
 });
 
+// // إضافة التوكن إلى رؤوس الطلبات
+// api.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("token");
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
+
 // دالة مساعدة للتعامل مع الاستجابات
-const sendRequest = async (
+const sendRequest = async ({
   verb,
   url,
   data = null,
-  contentType = "application/json"
-) => {
+  params = null,
+  contentType = "application/json"}) => {
   try {
     const response = await api({
       method: verb,
@@ -25,47 +34,40 @@ const sendRequest = async (
       headers: {
         "Content-Type": contentType,
       },
-    });
+    });   
+    console.log(url, response); 
     return {
       success: true,
       status: response.status,
       msg: "",
       data: response.data.data,
     };
-    // the server responded with a status code out of 2xx
+    // the server responded with a status code out of 2xx 
   } catch (error) {
-    // the server responded with 422
-    if (error.status == 422)
+      // the server responded with 422
+    if (error.status == 422)      
       return {
-        status: error.status,
         success: false,
+        status: error.status,
         msg: "بعض الحقول غير صحيحة، يرجى التحقق.",
         data: error.response.data.errors,
       };
-    // the server responded with othor
-    else if (error.response)
+      // the server responded with other
+     else if (error.response)     
       return {
         success: false,
         status: error.status,
         msg: "حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.",
         data: error.response.data,
-      };
-    else
+      }; 
+     else 
       return {
         success: false,
         status: "no response",
         msg: "الخادم غير متوفر حالياً. يرجى المحاولة لاحقاً.",
         data: error.request,
-      };
+      };    
   }
 };
 
-/*********************** add project ******************** */
-export const projects = {
-  add: async (data) =>
-    sendRequest("post", "/projects", data, "multipart/form-data"),
-  list: async () => sendRequest("get", "/projects"),
-  types: async () => sendRequest("get", "/project-types"),
-  documentTypes: async () => sendRequest("get", "/document-types"),
-  show: async (id) => sendRequest("get", `/projects/${id}`),
-};
+export default sendRequest;

@@ -1,4 +1,6 @@
-import { projects as apiProjects } from "../../../services/apiReq";
+import { projects as apiProjects } from "../../../services/api";
+import { projectTypes as apiProjectTypes } from "../../../services/api";
+import { documentTypes as apiDocumentTypes } from "../../../services/api";
 import Select from "react-select";
 import MyInput from "../../../components/form/MyInput";
 import FileRow from "../../../Components/form/FileRow";
@@ -152,12 +154,12 @@ export default function AddProject() {
     async function load() {
       setLoading(true);
       // fetch project types
-      const types = await apiProjects.types();
+      const types = await apiProjectTypes.list();
       if (types.success) setProjectTypes(types.data);
       else toast.error(types.msg || "تعذر جلب أنواع المشاريع.");
 
       // fetch document types
-      const docs = await apiProjects.documentTypes();
+      const docs = await apiDocumentTypes.list();
       if (docs.success) setDocumentTypes(docs.data);
       else toast.error(docs.msg || "تعذر جلب أنواع المستندات.");
 

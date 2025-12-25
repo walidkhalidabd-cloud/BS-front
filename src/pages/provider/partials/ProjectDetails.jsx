@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { projects as apiProject } from "../../../services/apiReq";
+import { projects as apiProject } from "../../../services/api";
 export default function ProjectDetails() {
   const { project_id } = useParams();
   const [project, setProject] = useState(null);

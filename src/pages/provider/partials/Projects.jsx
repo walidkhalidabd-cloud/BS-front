@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { projects as apiProjects } from "../../../services/apiReq";
+import { projects as apiProjects } from "../../../services/api";
 import { Link, useParams } from "react-router-dom";
 
 export default function Projects() {
