@@ -11,13 +11,13 @@ const api = axios.create({
 });
 
 // // إضافة التوكن إلى رؤوس الطلبات
-// api.interceptors.request.use((config) => {
-//   const token = localStorage.getItem("token");
-//   if (token) {
-//     config.headers.Authorization = `Bearer ${token}`;
-//   }
-//   return config;
-// });
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 // دالة مساعدة للتعامل مع الاستجابات
 const sendRequest = async ({
@@ -26,6 +26,7 @@ const sendRequest = async ({
   data = null,
   params = null,
   contentType = "application/json"}) => {
+    // console.log("api request" , {verb, url, data, params, contentType});
   try {
     const response = await api({
       method: verb,
@@ -35,7 +36,7 @@ const sendRequest = async ({
         "Content-Type": contentType,
       },
     });  
-    // console.log("api response" , response); 
+    console.log("api response" , response); 
     return {
       success: true,
       status: response.status,
@@ -53,14 +54,15 @@ const sendRequest = async ({
         data: error.response.data.errors,
       };
       // the server responded with other
-     else if (error.response)     
+     else if (error.response) {    
+      // console.log("api error response" , error.response);
       return {
         success: false,
-        status: error.status,
+        status: error.status,        
         msg: "حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.",
         data: error.response.data,
       }; 
-     else 
+    }else 
       return {
         success: false,
         status: "no response",

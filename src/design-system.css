@@ -299,8 +299,6 @@ body {
 }
 
 label {
-  display: block;
-  margin-bottom: var(--spacing-sm);
   font-weight: var(--fw-medium);
   color: var(--text-dark);
 }

@@ -1,9 +1,9 @@
 // Input.js
 import React from "react";
 
-const MyInput = ({ type, placeholder, name, value, onChange ,error}) => {
+const MyInput = ({ type, placeholder, name, value, onChange ,error , col=6}) => {
   return (
-    <div className="col-6 py-1">
+    <div className={`col-${col} py-1`}>
       <input
         className="form-control"
         type={type ?? "text"}

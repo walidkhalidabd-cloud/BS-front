@@ -16,8 +16,11 @@ h1,h2 ,h3,h4,h5,h5 {
 .mt-7 {
   margin-top: 4em;
 }
+.mt-10 {
+  margin-top: 6em;
+}
 .mt-200 {
-  margin-top: 200px;
+  margin-top: 100px;
 }
 .mb-100 {
   margin-bottom: 100px;
@@ -71,15 +74,6 @@ a:hover {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
 }
-/* upper-navbar */
-#upper-nav {
-  font-size: 1.3em !important;
-}
-#upper-nav a {
-  font-size: 1em;
-  padding: 0 10px;
-}
-
 /* ************** main-navbar ***************/
 #MainNavBar {
   position: fixed;
@@ -93,31 +87,68 @@ a:hover {
 .navbar{
   align-items: flex-start ;  
 }
-.navbar a{
-  color: white;
-  transition: 0.5s;
-  padding-top: 0;
-}
-.navbar a:hover {
-  color: var(--primary-light-2);
-  transform: scale(1.05);
-}
-.active {
-  color: var(--secondary-color) !important;
-}
+
 .left-nav{
   align-items: flex-start;
   padding-bottom: .5em;
 }
 .logo{
   background-color: rgb(100, 117, 173);
-  /* box-shadow: 2px 3px 10px ; */
   height: 62px;
   margin-left: 2em;
   position: relative;
   bottom: .4em;
   border-radius: 5px;
 }
+
+.navbar-brand {
+  left: 20px;
+}
+
+.navbar a,
+.navbar button {
+  color: white !important;
+}
+
+.navbar a:hover,
+.navbar button:hover,
+.dropdown-item:hover {
+  color: rgb(250, 238, 215) !important;
+  background-color: transparent;
+}
+.dropdown-menu{
+  background-color: var(--primary-color);
+}
+.nav-item,
+.dropdown-item {
+  text-align: center !important;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+}
+
+.active {
+  color: var(--secondary-color) !important;
+}
+/* ************ auth *************** */
+.auth-container .row{
+  height: 70vh;
+  min-height: fit-content;
+}
+.img-container{
+  padding: 3em 0 2em 0;
+}
+.auth-container img{
+  height: 100%;
+  max-height: 70vh;
+  object-fit: cover;
+}
+.select-multiple {
+  color: black !important;
+}
+
 /* ************ cover *************** */
 .highlight {
   color: var(--secondary-color);

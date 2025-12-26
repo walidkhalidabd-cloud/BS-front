@@ -12,9 +12,9 @@ export default function Slider() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div id="cover" className="slider-container container main-container">
-      <div className="text-section d-flex flex-column flex-center">
-        <h1 className="title mt-5 ">
+    <div id="cover" className="slider-container container">
+      <div className="text-section d-flex flex-column flex-center ps-2">
+        <h1 className="mt-5">
           أبدأ بتجهيز منشاتك مع منصة بناءك <br />
           <span className="highlight"> BS </span>
         </h1>

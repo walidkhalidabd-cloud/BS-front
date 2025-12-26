@@ -5,3 +5,4 @@ export { default as documentTypes} from './documentTypes';
 export { default as contactTypes} from './documentTypes';
 export { default as roles} from './roles';
 export { default as accountStatuses} from './accountStatuses';
+export { default as auth} from './authentication';

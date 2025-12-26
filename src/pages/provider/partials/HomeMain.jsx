@@ -30,7 +30,7 @@ export default function HomeMain() {
     <section className="p-5 mt-5 h-50vh">
       <p className="mb-2  fs-1">مرحباً {user?.name} </p>
 
-      <i class="fa-solid fa-basket-shopping"></i>
+      <i className="fa-solid fa-basket-shopping"></i>
       <div className="provider-cards">
         <StatCard
           label="مشاريع جديدة"

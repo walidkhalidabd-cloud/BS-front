@@ -1,4 +1,4 @@
-import {authentication} from '../../services/api'
+import {auth} from '../../services/api'
 import { useNavigate } from 'react-router-dom';
 import './adminHeader.css';
 
@@ -27,7 +27,7 @@ const AdminHeader = ({onToggleSidebar, sidebarOpen}) => {
       
       <div className="controls d-flex">
       
-        <div className="py-2 text-shadow">{authentication.currentUser()}</div>        
+        <div className="py-2 text-shadow">{auth.currentUser()}</div>        
         <button className="btn text-white mx-5 fs-5 text-shadow" onClick={logoutFn}>تسجيل خروج</button>
         <img src="/logo.png" alt="" width="50"/>
 

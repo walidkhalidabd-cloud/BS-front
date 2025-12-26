@@ -30,7 +30,7 @@ export default function ManageMain({ api, filter, fields }) {
       <div className="d-flex justify-content-between align-items-center ">
         <h3 className="text-warning">{title}</h3>
           <button
-            className="btn btn-outline-warning add-new "
+            className="btn btn-outline-warning border border-warning fw-bold fs-6"
             onClick={() => open()}
           >
             إضافة جديد

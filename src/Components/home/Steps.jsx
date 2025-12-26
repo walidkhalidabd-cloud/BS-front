@@ -22,7 +22,7 @@ export default function Steps() {
         </div>
         <div className="row">
           {steps.map((step, index) => (
-            <div className="step col-md-4">
+            <div className="step col-md-4" key={index}>
               <div className="step-number ">{index}</div>
               <h3>{step.title}</h3>
               <p>
