@@ -1,7 +1,7 @@
 import "./Steps.css";
 export default function Steps() {
   const steps = [
-    { title: "أنشئ حسابك", line1: "سجل حسابك", line2: "كزيون بسهولة" },
+    { title: "أنشئ حسابك", line1: "سجل حسابك", line2: "كزبون بسهولة" },
     {
       title: "أضف مشروعك",
       line1: "أنشئ مشروعك الجديد ",

@@ -1,16 +1,14 @@
 import { useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import {auth } from '../../services/api';
-
+import { auth } from "../../services/api";
 
 export default function MainNavBar() {
   const user = auth.currentUser();
+  const userType = auth.currentUserType();
   const navigate = useNavigate();
 
-  // console.log(user);
   const logout = () => {
     auth.logout();
-    localStorage.removeItem("token");
     localStorage.removeItem("name");
     localStorage.removeItem("type");
     navigate("/");
@@ -60,7 +58,7 @@ export default function MainNavBar() {
             </NavLink>
 
             <NavLink to="/x#" className="nav-item nav-link">
-              اتصل بنا
+              اتصل بنا 
             </NavLink>
           </div>
           <ul className="navbar-nav align-items-center fs-5">
@@ -77,14 +75,15 @@ export default function MainNavBar() {
                 </a>
                 <ul className="dropdown-menu ">
                   <li>
-                    <Link className="dropdown-item" to="#">
-                      الملف الشخصي
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item " to="/admin">
-                      إدارة الموقع
-                    </Link>
+                    {userType == "admin" ? (
+                      <Link className="dropdown-item " to="/admin">
+                        إدارة الموقع
+                      </Link>
+                    ) : (
+                      <Link className="dropdown-item" to="#">
+                        الملف الشخصي
+                      </Link>
+                    )}
                   </li>
 
                   <li>
@@ -109,7 +108,7 @@ export default function MainNavBar() {
                 </>
               </li>
             )}
-          </ul>         
+          </ul>
         </div>
       </nav>
     </div>

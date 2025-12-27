@@ -28,13 +28,13 @@ const Register = () => {
       password: "",
       password_confirmation: "",
       name: "",
-      type: "provider", // Default to tourist
+      type: "provider", 
       is_consultant: false,
       experience_start: '',
       role_id: null,
     },
   };
-  const [userType, setUserType] = useState("provider");
+  const [userType, setUserType] = useState("customer");
   const [formData, setFormData] = useState(userTypes[userType]);
 
   const userTypesRadio = [
@@ -194,10 +194,15 @@ const Register = () => {
                 type="submit"
                 disabled={loading}
               >
-                {loading ? "[جاري تسجيل الدخول...]" : "إنشاء حساب"}
+                {loading ? "[جاري إنشاء الحساب...]" : "إنشاء حساب"}
               </button>
               <Link className="me-2 btn bg-success-subtle fs-5" to="/">
                 عودة
+              </Link>
+            </div>
+            <div className="text-center mt-3">
+              <Link to="/login" className="text-warning">
+                 لديك حساب
               </Link>
             </div>
           </form>

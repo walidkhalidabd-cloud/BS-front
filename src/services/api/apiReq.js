@@ -13,6 +13,8 @@ const api = axios.create({
 // // إضافة التوكن إلى رؤوس الطلبات
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
+    // console.log("header",token)
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -25,8 +27,8 @@ const sendRequest = async ({
   url,
   data = null,
   params = null,
-  contentType = "application/json"}) => {
-    // console.log("api request" , {verb, url, data, params, contentType});
+  contentType= "application/json"}) => {
+    console.log("api request" , {verb, url, data, params, contentType});
   try {
     const response = await api({
       method: verb,
@@ -38,7 +40,7 @@ const sendRequest = async ({
     });  
     console.log("api response" , response); 
     return {
-      success: true,
+      success: response.data.success,
       status: response.status,
       msg: response.data.message,
       data: response.data.data,
@@ -52,9 +54,9 @@ const sendRequest = async ({
         status: error.status,
         msg: "بعض الحقول غير صحيحة، يرجى التحقق.",
         data: error.response.data.errors,
-      };
+      };    
       // the server responded with other
-     else if (error.response) {    
+    else if (error.response) {    
       // console.log("api error response" , error.response);
       return {
         success: false,

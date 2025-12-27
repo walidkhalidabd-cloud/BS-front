@@ -18,6 +18,8 @@ import ContactType from "./pages/Admin/partials/ContactType";
 import AccountStatus from "./pages/Admin/partials/AccountStatus";
 import ProjectType from "./pages/Admin/partials/ProjectType";
 import Role from "./pages/Admin/partials/Role";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import Forbidden from "./pages/home/partials/Forbidden";
 
 const router = createBrowserRouter([
   {
@@ -38,17 +40,29 @@ const router = createBrowserRouter([
       },
       {
         path: "add-project",
-        element: <AddProject />,
+        element: (
+          <ProtectedRoute>
+            <AddProject />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "forbidden",
+        element: <Forbidden />,
       },
     ],
   },
   {
     path: "/admin",
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute type="admin">
+        <Dashboard />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
-        element: <AdminHome/>,
+        element: <AdminHome />,
       },
       {
         path: "document-types",

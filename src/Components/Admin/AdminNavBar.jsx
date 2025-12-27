@@ -1,13 +1,12 @@
 import {auth} from '../../services/api'
 import { useNavigate } from 'react-router-dom';
-import './adminHeader.css';
+import './AdminNavBar.css';
 
-const AdminHeader = ({onToggleSidebar, sidebarOpen}) => {  
+const AdminNavBar = ({onToggleSidebar, sidebarOpen}) => {  
   const navigator = useNavigate();  
 
   const logoutFn = () => {
     auth.logout();
-    localStorage.removeItem("token");
     localStorage.removeItem("name");
     localStorage.removeItem("type");
     navigator('/');
@@ -36,4 +35,4 @@ const AdminHeader = ({onToggleSidebar, sidebarOpen}) => {
   )
 }
 
-export default AdminHeader
+export default AdminNavBar

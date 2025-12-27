@@ -5,7 +5,6 @@ import { auth } from "../../../services/api";
 import { toast } from "react-toastify";
 import Loading from "../../../Components/shared/Loading";
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,8 +27,6 @@ const Login = () => {
       if (data.type == "admin") navigate("/admin");
       else if (data.type == "provider") navigate("/provider");
       else navigate("/");
-    } else if (status === 400) {
-      toast.error("بيانات الدخول غير صحيحة. يرجى المحاولة مرة أخرى.");
     } else if (status === 422) {
       toast.warn(msg);
       setValidationErrors(data);
@@ -42,10 +39,8 @@ const Login = () => {
     <div className="container auth-container">
       <div className="row w-100 mt-5">
         <div className="col-6 p-5 d-flex align-items-center">
-          <form className="w-100"
-            onSubmit={handleSubmit}            
-          >
-                      {loading && <Loading />}            
+          <form className="w-100" onSubmit={handleSubmit}>
+            {loading && <Loading />}
 
             <h3 className="mb-3 text-secondary text-center">تسجيل دخول</h3>
             <MyInput
@@ -77,6 +72,11 @@ const Login = () => {
               </button>
               <Link className="me-2 btn bg-success-subtle fs-5" to="/">
                 عودة
+              </Link>
+            </div>
+            <div className="text-center mt-3">
+              <Link to="/register" className="text-warning">
+                ليس لديك حساب
               </Link>
             </div>
           </form>

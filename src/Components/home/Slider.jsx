@@ -15,7 +15,7 @@ export default function Slider() {
     <div id="cover" className="slider-container container">
       <div className="text-section d-flex flex-column flex-center ps-2">
         <h1 className="mt-5">
-          أبدأ بتجهيز منشاتك مع منصة بناءك <br />
+          ابدأ بتحضير منشآتك باستخدام منصة بناءك <br />
           <span className="highlight"> BS </span>
         </h1>
         <Link to="add-project" className="btn main-btn mt-3">
