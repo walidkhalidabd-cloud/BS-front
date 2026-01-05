@@ -16,12 +16,45 @@ export default function ManageModal({
         {fields.map((f) => (
           <div key={f.name} className="mb-3">
             <label className="form-label">{f.label}</label>
-            <input
-              className="form-control"
-              value={row[f.name] || ""}
-              onChange={(e) => onSave({ ...row, [f.name]: e.target.value })}
-              disabled={saving}
-            />
+            {f.type === "select" ? (
+              <select
+                className="form-control"
+                multiple={!!f.multiple}
+                value={
+                  f.multiple ? row[f.name] ?? [] : row[f.name] ?? ""
+                }
+                onChange={(e) => {
+                  if (f.multiple) {
+                    const values = Array.from(e.target.selectedOptions).map(
+                      (o) => o.value
+                    );
+                    onSave({ ...row, [f.name]: values });
+                  } else {
+                    onSave({ ...row, [f.name]: e.target.value });
+                  }
+                }}
+                disabled={saving}
+              >
+                {!f.multiple && <option value="">-- اختر --</option>}
+                {Array.isArray(f.options) &&
+                  f.options.map((opt, i) => {
+                    const val = typeof opt === "object" ? opt.id : opt;
+                    const label = typeof opt === "object" ? opt.name : opt;
+                    return (
+                      <option key={i} value={val}>
+                        {label}
+                      </option>
+                    );
+                  })}
+              </select>
+            ) : (
+              <input
+                className="form-control"
+                value={row[f.name] || ""}
+                onChange={(e) => onSave({ ...row, [f.name]: e.target.value })}
+                disabled={saving}
+              />
+            )}
           </div>
         ))}
 

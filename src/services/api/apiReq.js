@@ -13,7 +13,7 @@ const api = axios.create({
 // // إضافة التوكن إلى رؤوس الطلبات
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-    // console.log("header",token)
+  // console.log("header",token)
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -27,8 +27,9 @@ const sendRequest = async ({
   url,
   data = null,
   params = null,
-  contentType= "application/json"}) => {
-    console.log("api request" , {verb, url, data, params, contentType});
+  contentType = "application/json",
+}) => {
+  console.log("api request", { verb, url, data, params, contentType });
   try {
     const response = await api({
       method: verb,
@@ -37,40 +38,47 @@ const sendRequest = async ({
       headers: {
         "Content-Type": contentType,
       },
-    });  
-    console.log("api response" , response); 
+    });
+    console.log("api response", response);
     return {
       success: response.data.success,
       status: response.status,
       msg: response.data.message,
       data: response.data.data,
     };
-    // the server responded with a status code out of 2xx 
+    // the server responded with a status code out of 2xx
   } catch (error) {
-      // the server responded with 422
-    if (error.status == 422)      
+    // the server responded with 422
+    if (error.status == 422)
       return {
         success: false,
         status: error.status,
         msg: "بعض الحقول غير صحيحة، يرجى التحقق.",
         data: error.response.data.errors,
-      };    
-      // the server responded with other
-    else if (error.response) {    
+      };
+    if (error.status == 401)
+      return {
+        success: false,
+        status: error.status,
+        msg: "سم المستخدم أو كلمة المرور غير صحيحة",
+        data: error.response.data.errors,
+      };
+    // the server responded with other
+    else if (error.response) {
       // console.log("api error response" , error.response);
       return {
         success: false,
-        status: error.status,        
-        msg: "حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.",
+        status: error.status,
+        msg: error.data.message,
         data: error.response.data,
-      }; 
-    }else 
+      };
+    } else
       return {
         success: false,
         status: "no response",
         msg: "الخادم غير متوفر حالياً. يرجى المحاولة لاحقاً.",
         data: error.request,
-      };    
+      };
   }
 };
 

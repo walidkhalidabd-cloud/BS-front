@@ -12,9 +12,24 @@ export default function ManageTable({ items, fields, onEdit, onDelete }) {
       <tbody>
         {items.map((row) => (
           <tr key={row.id}>
-            {fields.map((f) => (
-              <td key={f.name}>{row[f.name]}</td>
-            ))}
+            {fields.map((f) => {
+              let value = row[f.name];
+              // console.log(f.options);
+              console.log(value);
+              if (f.type === "select" && Array.isArray(f.options)) {
+                if (Array.isArray(value)) {
+                  const names = value.map((v) => v.name);
+                  // console.log(names);
+                  value = names.join("، ");
+                  // console.log(value);
+                } else {
+                  value =
+                    typeof value === "object" ? value.name ?? value.id : value;
+                }
+              }
+              return <td key={f.name}>{value}</td>;
+            })}
+
             <td className="">
               <button
                 className="btn btn-outline-primary btn-sm mx-1 border border-primary"

@@ -15,7 +15,6 @@ import ProjectDetails from "./pages/provider/partials/ProjectDetails";
 import Dashboard from "./pages/Admin/Dashboard";
 import DocumentType from "./pages/Admin/partials/DocumentType";
 import ContactType from "./pages/Admin/partials/ContactType";
-import AccountStatus from "./pages/Admin/partials/AccountStatus";
 import ProjectType from "./pages/Admin/partials/ProjectType";
 import Role from "./pages/Admin/partials/Role";
 import ProtectedRoute from "./Components/ProtectedRoute";
@@ -79,10 +78,6 @@ const router = createBrowserRouter([
       {
         path: "contact-types",
         element: <ContactType />,
-      },
-      {
-        path: "account-statuses",
-        element: <AccountStatus />,
       },
     ],
   },

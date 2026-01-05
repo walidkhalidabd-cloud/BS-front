@@ -6,12 +6,23 @@ import "./manage.css";
 import Loading from "../../Shared/Loading";
 
 export default function ManageMain({ api, filter, fields }) {
-  const { items, loading, saving, save, remove , title  } = useManage(api , filter);
+  const { items, loading, saving, save, remove, title } = useManage(
+    api,
+    filter
+  );
   const [showModal, setShowModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
   function open(row = null) {
     setActiveRow(
-      row || fields.reduce((acc, f) => ({ ...acc, [f.name]: "" }), {})
+      row ||
+        fields.reduce((acc, f) => {
+          let def = "";
+          if (f.type === "select") {
+            if (f.multiple) def = [];
+            else def = "";
+          }
+          return { ...acc, [f.name]: def };
+        }, {})
     );
     setShowModal(true);
   }
@@ -29,12 +40,12 @@ export default function ManageMain({ api, filter, fields }) {
     <section className="dashboard-body">
       <div className="d-flex justify-content-between align-items-center ">
         <h3 className="text-warning">{title}</h3>
-          <button
-            className="btn btn-outline-warning border border-warning fw-bold fs-6"
-            onClick={() => open()}
-          >
-            إضافة جديد
-          </button>
+        <button
+          className="btn btn-outline-warning border border-warning fw-bold fs-6"
+          onClick={() => open()}
+        >
+          إضافة جديد
+        </button>
       </div>
 
       {loading && <Loading />}
@@ -52,7 +63,7 @@ export default function ManageMain({ api, filter, fields }) {
         fields={fields}
         onSave={setActiveRow}
         onClose={handleClose}
-        saving ={saving}
+        saving={saving}
       />
     </section>
   );

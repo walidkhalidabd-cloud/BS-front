@@ -1,16 +1,13 @@
-import './adminSidebar.css'
-import {  NavLink } from "react-router-dom";
+import "./adminSidebar.css";
+import { NavLink } from "react-router-dom";
 
-const AdminSidebar = ({  
-  collapsed = false,
-}) => {
+const AdminSidebar = ({ collapsed = false }) => {
   const items = [
-    {  label: "لوحة القيادة", icon: "🏠" , path:"/admin"},
-    {  label: "أنواع المشاريع", icon: "🏢" ,  path:"project-types"},
-    { label: " أنواع المستندات", icon: "📃" ,path:"document-types"},
-    { label: " الأدوار", icon: "👷‍♂️" , path:"roles"},
-    { label: "أنواع جهات الاتصال", icon: "🛂" ,path:"contact-types"},
-    { label: "أنواع حالات الحساب", icon: "👥" ,path:"account-statuses"},
+    { label: "لوحة القيادة", icon: "🏠", path: "/admin" },
+    { label: "أنواع المشاريع", icon: "🏢", path: "project-types" },
+    { label: " أنواع المستندات", icon: "📃", path: "document-types" },
+    { label: " الأدوار", icon: "👷‍♂️", path: "roles" },
+    { label: "أنواع جهات الاتصال", icon: "👥", path: "contact-types" },
   ];
 
   return (
@@ -21,9 +18,9 @@ const AdminSidebar = ({
     >
       <nav>
         <ul>
-          {items.map((i , index) => (
-            <li key={index} >             
-              <NavLink to={i.path} className="btn item" end >
+          {items.map((i, index) => (
+            <li key={index}>
+              <NavLink to={i.path} className="btn item" end>
                 <span style={{ marginLeft: 8 }}>{i.icon}</span>
                 <span>{i.label}</span>
               </NavLink>
