@@ -20,6 +20,7 @@ const Login = () => {
       email,
       password,
     });
+    console.log(status, success, data, msg);
     if (success) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("name", data.name);

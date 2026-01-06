@@ -7,7 +7,8 @@ const AdminSidebar = ({ collapsed = false }) => {
     { label: "أنواع المشاريع", icon: "🏢", path: "project-types" },
     { label: " أنواع المستندات", icon: "📃", path: "document-types" },
     { label: " الأدوار", icon: "👷‍♂️", path: "roles" },
-    { label: "أنواع جهات الاتصال", icon: "👥", path: "contact-types" },
+    { label: "أنواع جهات الاتصال", icon: "📞", path: "contact-types" },
+    { label: "مقدمو الخدمات - قيد الانتظار", icon: "👥", path: "provider/pending" },
   ];
 
   return (

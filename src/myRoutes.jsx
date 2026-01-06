@@ -19,6 +19,7 @@ import ProjectType from "./pages/Admin/partials/ProjectType";
 import Role from "./pages/Admin/partials/Role";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Forbidden from "./pages/home/partials/Forbidden";
+import Provider from "./pages/Admin/partials/Provider";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
       {
         path: "contact-types",
         element: <ContactType />,
+      },
+      {
+        path: "provider/:status",
+        element: <Provider />,
       },
     ],
   },

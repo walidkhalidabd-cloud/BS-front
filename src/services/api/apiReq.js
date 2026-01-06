@@ -35,6 +35,7 @@ const sendRequest = async ({
       method: verb,
       url: url,
       data: data,
+      params:  params ,
       headers: {
         "Content-Type": contentType,
       },
@@ -55,21 +56,13 @@ const sendRequest = async ({
         status: error.status,
         msg: "بعض الحقول غير صحيحة، يرجى التحقق.",
         data: error.response.data.errors,
-      };
-    if (error.status == 401)
-      return {
-        success: false,
-        status: error.status,
-        msg: "سم المستخدم أو كلمة المرور غير صحيحة",
-        data: error.response.data.errors,
-      };
-    // the server responded with other
+      };    
     else if (error.response) {
-      // console.log("api error response" , error.response);
+      console.log("api error response" , error.response);
       return {
         success: false,
         status: error.status,
-        msg: error.data.message,
+        msg: error.response.data.message??  "حدث خطأ يرجى المحاولة لاحقاً.",
         data: error.response.data,
       };
     } else

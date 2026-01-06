@@ -13,8 +13,8 @@ export default function ManageMain({ api, filter, fields }) {
   const [showModal, setShowModal] = useState(false);
   const [activeRow, setActiveRow] = useState({});
   function open(row = null) {
-    setActiveRow(
-      row ||
+    if (!row) {
+      setActiveRow(
         fields.reduce((acc, f) => {
           let def = "";
           if (f.type === "select") {
@@ -23,7 +23,45 @@ export default function ManageMain({ api, filter, fields }) {
           }
           return { ...acc, [f.name]: def };
         }, {})
-    );
+      );
+    } else {
+      const normalized = fields.reduce((acc, f) => {
+        const val = row[f.name];
+        if (f.type === "select") {
+          if (f.multiple) {
+            if (Array.isArray(val)) acc[f.name] = val;
+            else if (val == null) acc[f.name] = [];
+            else if (typeof val === "string") {
+              try {
+                const t = val.trim();
+                if (t.startsWith("[") || t.startsWith("{")) {
+                  acc[f.name] = JSON.parse(val);
+                } else {
+                  acc[f.name] = val
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean);
+                }
+              } catch (e) {
+                acc[f.name] = val
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean);
+              }
+            } else {
+              acc[f.name] = [val];
+            }
+          } else {
+            if (Array.isArray(val)) acc[f.name] = val[0] ?? "";
+            else acc[f.name] = val ?? "";
+          }
+        } else {
+          acc[f.name] = val ?? "";
+        }
+        return acc;
+      }, {});
+      setActiveRow({ ...row, ...normalized });
+    }
     setShowModal(true);
   }
 

@@ -19,7 +19,7 @@
   /* الألوان الثانوية */
   --secondary-color: #ff8a00;      /* برتقالي دافئ - للتنبيهات */
   --secondary-light: #f8b84e;
-  --secondary-dark: #d68910;
+  --secondary-dark: rgb(245, 148, 92);
   
   /* حالات النجاح والخطأ */
   --success-color: #27ae60;        /* أخضر - للنجاح */
@@ -213,6 +213,10 @@ body {
 .btn-danger:hover {
   background: #c0392b;
   box-shadow: var(--shadow-lg);
+}
+
+.text-secondary-dark{
+  color: var(--secondary-dark);
 }
 
 .btn-waring {

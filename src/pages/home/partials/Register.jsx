@@ -28,8 +28,7 @@ const Register = () => {
       password: "",
       password_confirmation: "",
       name: "",
-      type: "provider", 
-      is_consultant: false,
+      type: "provider",       
       experience_start: '',
       role_id: null,
     },
@@ -47,10 +46,7 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleCheckbox = (e) => {
-    setFormData({ ...formData, is_consultant: e.target.checked });
-  };
-
+  
   const handleUserTypeChange = (e) => {
     const selectedType = e.target.value;
     setUserType(selectedType);
@@ -145,19 +141,7 @@ const Register = () => {
             />
 
             {formData.type === "provider" && (
-              <>
-                <div className="mb-3">
-                  <input
-                    id="is_consultant"
-                    type="checkbox"
-                    checked={formData.is_consultant}
-                    onChange={handleCheckbox}
-                  />
-                  <label htmlFor="is_consultant" className="me-2">
-                    مستشار
-                  </label>
-                </div>
-
+              <>                
                 <MyInput
                   placeholder="تاريخ بدءالعمل"
                   type="date"
