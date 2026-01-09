@@ -6,7 +6,7 @@ export default function Role() {
     <ManageMain
       api={roles}
       fields={[
-        { name: "name", label: "اسم نوع جهات الاتصال" },
+        { name: "name", label: "اسم الدور" },
       ]}
     />
   );

@@ -9,8 +9,8 @@ export default function NotificationBox({ setNotificationOpen }) {
   const [loading, setLoading] = useState(false);
 
   const markAsRead = async () => {
-    const { result, text } = await apiNotifications.markAsRead();
-    if (result) {
+    const { success, msg } = await apiNotifications.markAsRead();
+    if (success) {
       const readNotifications = notifications.map((n) => {
         if (!n.read) {
           n.date = new Date();
@@ -20,16 +20,16 @@ export default function NotificationBox({ setNotificationOpen }) {
       });
       console.log("read");
       setNotifications(readNotifications);
-    } else toast.error(text);
+    } else toast.error(msg);
   };
 
   useEffect(() => {
     const unreadNotifications = async () => {
       setLoading(true);
-      const { result, data, text } = await apiNotifications.list();
+      const { success, data, msg } = await apiNotifications.list();
       // console.log(data);
-      if (result) setNotifications(data);
-      else toast.error(text);
+      if (success) setNotifications(data);
+      else toast.error(msg);
       setLoading(false);
     };
 
@@ -63,33 +63,30 @@ export default function NotificationBox({ setNotificationOpen }) {
                   markAsRead();
                 }}
               >
-                ✖{" "}
+                <i className="fa fa-close"></i>
               </button>
               <div className="modal-body p-0">
-                <table className="table mb-0 table-concise">
-                  <thead className="table-light">
-                    <tr>
-                      <th>الرسالة</th>
-                      <th>التاريخ</th>
-                      <th>الحالة</th>
+                <table className="table mb-0 table-concise table-center">
+                  <thead className="table-light ">
+                    <tr className=" fw-normal">
+                      <th className=" fw-light text-warning ">الرسالة</th>
+                      <th className=" fw-light text-warning ">التاريخ</th>
+                      <th className=" fw-light text-warning ">الحالة</th>
                     </tr>
                   </thead>
                   <tbody>
                     {notifications.map((n) => (
                       <tr
-                        key={n.id}
-                        className={
-                          n.read ? "table-success-light" : "table-warning-light"
-                        }
+                        key={n.id}                        
                       >
                         <td>{n.message}</td>
                         <td>{new Date(n.date).toLocaleDateString("ar-EG")}</td>
                         {/* <td>{n.date}</td> */}
                         <td>
                           {n.read ? (
-                            <span className="badge bg-success">مقروء</span>
+                            <span className="badge bg-primary">مقروء</span>
                           ) : (
-                            <span className="badge bg-warning text-dark">
+                            <span className="badge bg-warning msg-dark">
                               غير مقروء
                             </span>
                           )}

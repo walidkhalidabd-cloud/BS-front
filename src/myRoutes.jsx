@@ -6,12 +6,12 @@ import NotFound from "./pages/NotFound";
 import HomeMain from "./pages/home/partials/HomeMain";
 import AddProject from "./pages/home/partials/AddProject";
 
-import HomeProvider from "./pages/provider/Home";
-import HomeMainProvider from "./pages/provider/partials/HomeMain";
+import HomeClient from "./pages/client/Home";
+import HomeMainClient from "./pages/client/partials/HomeMain";
 
 import AdminHome from "./pages/Admin/partials/Home";
-import Projects from "./pages/provider/partials/Projects";
-import ProjectDetails from "./pages/provider/partials/ProjectDetails";
+import Projects from "./pages/client/partials/Projects";
+import ProjectDetails from "./pages/client/partials/ProjectDetails";
 import Dashboard from "./pages/Admin/Dashboard";
 import DocumentType from "./pages/Admin/partials/DocumentType";
 import ContactType from "./pages/Admin/partials/ContactType";
@@ -19,7 +19,7 @@ import ProjectType from "./pages/Admin/partials/ProjectType";
 import Role from "./pages/Admin/partials/Role";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Forbidden from "./pages/home/partials/Forbidden";
-import Provider from "./pages/Admin/partials/Provider";
+import Clients from "./pages/Admin/partials/Clients";
 
 const router = createBrowserRouter([
   {
@@ -81,18 +81,18 @@ const router = createBrowserRouter([
         element: <ContactType />,
       },
       {
-        path: "provider/:status",
-        element: <Provider />,
+        path: "clients/:status",
+        element: <Clients />,
       },
     ],
   },
   {
-    path: "/provider",
-    element: <HomeProvider />,
+    path: "/client",
+    element: <HomeClient />,
     children: [
       {
         index: true,
-        element: <HomeMainProvider />,
+        element: <HomeMainClient />,
       },
       {
         path: "projects/:status",

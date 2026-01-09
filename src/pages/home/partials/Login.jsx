@@ -26,7 +26,7 @@ const Login = () => {
       localStorage.setItem("name", data.name);
       localStorage.setItem("type", data.type);
       if (data.type == "admin") navigate("/admin");
-      else if (data.type == "provider") navigate("/provider");
+      else if (data.type == "client") navigate("/client");
       else navigate("/");
     } else if (status === 422) {
       toast.warn(msg);

@@ -246,30 +246,30 @@ a:hover {
   height: 520px;
 }
 
-/* ********** provider cards */
+/* ********** client cards */
 
-.provider-cards {
+.client-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 16px;
   margin-top: 12px;  
 }
-.provider-card {
+.client-card {
   background: #fff;
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);  
 }
-.provider-card .label {
+.client-card .label {
   font-size: 20px;
   /* color: #888; */
   font-weight: 600;
 }
-.provider-card .value {
+.client-card .value {
   font-size: 30px;
   font-weight: 700;
 }
-.provider-icon{
+.client-icon{
   font-size: 3.5em;
 }
 

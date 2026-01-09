@@ -3,7 +3,7 @@ import useManage from "../../../hooks/useManage";
 import ManageModal from "./ManageModal";
 import ManageTable from "./ManageTable";
 import "./manage.css";
-import Loading from "../../Shared/Loading";
+import Loading from "../../shared/Loading";
 
 export default function ManageMain({ api, filter, fields }) {
   const { items, loading, saving, save, remove, title } = useManage(
@@ -77,7 +77,7 @@ export default function ManageMain({ api, filter, fields }) {
   return (
     <section className="dashboard-body">
       <div className="d-flex justify-content-between align-items-center ">
-        <h3 className="text-warning">{title}</h3>
+        <h3 className="text-secondary my-3">{title}</h3>
         <button
           className="btn btn-outline-warning border border-warning fw-bold fs-6"
           onClick={() => open()}

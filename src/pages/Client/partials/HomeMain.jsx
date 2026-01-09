@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 const StatCard = ({ label, value,  color }) => (
-  <div className={`provider-card px-4 text-${color} `}>
+  <div className={`client-card px-4 text-${color} `}>
     <div
       style={{
         display: "flex",
@@ -11,7 +11,7 @@ const StatCard = ({ label, value,  color }) => (
       }}
     >
       <div className="label">{label}</div>
-      <div className="provider-icon">
+      <div className="client-icon">
       </div>
     </div>
     <div className="value" style={{ marginTop: 8 }}>
@@ -31,7 +31,7 @@ export default function HomeMain() {
       <p className="mb-2  fs-1">مرحباً {user?.name} </p>
 
       <i className="fa-solid fa-basket-shopping"></i>
-      <div className="provider-cards">
+      <div className="client-cards">
         <StatCard
           label="مشاريع جديدة"
           value={activeProjects}

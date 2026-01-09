@@ -23,12 +23,12 @@ const Register = () => {
       name: "",
       type: "customer",
     },
-    provider: {
+    client: {
       email: "",
       password: "",
       password_confirmation: "",
       name: "",
-      type: "provider",       
+      type: "client",       
       experience_start: '',
       role_id: null,
     },
@@ -38,7 +38,7 @@ const Register = () => {
 
   const userTypesRadio = [
     { label: "زبون", value: "customer" },
-    { label: "مزود خدمة", value: "provider" },
+    { label: "عميل", value: "client" },
   ];
 
   const handleChange = (e) => {
@@ -69,7 +69,7 @@ const Register = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("name", data.name);
       localStorage.setItem("type", data.type);
-      if (data.type == "provider") navigate("/provider");
+      if (data.type == "client") navigate("/client");
       else navigate("/");
     } else if (status == 422) {
       toast.warn("بعص الحقول غير صحيحة");
@@ -140,7 +140,7 @@ const Register = () => {
               col="12"
             />
 
-            {formData.type === "provider" && (
+            {formData.type === "client" && (
               <>                
                 <MyInput
                   placeholder="تاريخ بدءالعمل"

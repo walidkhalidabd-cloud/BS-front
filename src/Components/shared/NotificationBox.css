@@ -1,9 +1,9 @@
 .modal-content {
   position: absolute;
-  top: 58px !important;
-  left: -120px !important;
+  top: 52px !important;
+  right: -100px !important;
   max-width: 500px;
-  box-shadow: 1px 1px 5px rgb(0,0,0,0.5);  
+  box-shadow: 2px 2px 5px rgb(255,255,255,0.5);  
 }
 
 .close {
@@ -22,4 +22,19 @@
 
 .modal-body td{
     color: var(--text-dark);
+}
+.table-concise th {
+  padding: 0.1em !important;
+  text-align: center;
+}
+.table-concise td {
+  padding: 0.3em 0.5em !important;
+  font-size: .9em;  
+}
+.table-concise {
+  border: solid orange 3px;
+  color: orange;
+}
+.table-center td , th {
+  text-align: center !important;
 }

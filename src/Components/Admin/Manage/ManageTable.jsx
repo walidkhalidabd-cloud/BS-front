@@ -2,11 +2,11 @@ export default function ManageTable({ items, fields, onEdit, onDelete }) {
   return (
     <table className="table mt-3">
       <thead>
-        <tr className="bg-primary-light">
+        <tr>
           {fields.map((f) => (
-            <th key={f.name}>{f.label}</th>
+            <th className="text-secondary fw-normal" key={f.name}>{f.label}</th>
           ))}
-          <th className=""> إجراءات</th>
+          <th className="text-secondary fw-normal"> إجراءات</th>
         </tr>
       </thead>
       <tbody>

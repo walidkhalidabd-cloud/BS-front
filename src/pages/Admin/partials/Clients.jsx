@@ -1,23 +1,25 @@
 
 import { useEffect, useState } from "react";
-import { providers  } from "../../../services/api";
+import { clients as apiClients } from "../../../services/api";
 import { useParams } from "react-router-dom";
 import Loading from "../../../Components/shared/Loading";
+import { toast } from "react-toastify";
 
-export default function Providers() {
+export default function Clients() {
   const {status} = useParams();
   const [loading, setLoading] = useState(false); 
   const [saving, setSaving] = useState(false);
-  const [Providers, setProviders] = useState([]);
+  const [clients, setClients] = useState([]);
   
 
-  async function handleToggle( providerId) {
+  async function handleAccept( clientId) {
     setSaving(true);
-     const {success,  msg} = await providers.changeStatus(providerId , 'active');  
+     const {success,  msg} = await apiClients.accept(clientId);  
      if(success){
-      setProviders((prev) =>
-          prev.filter(s => (s.id !== providerId) )
+      setClients((prev) =>
+          prev.filter(s => (s.id !== clientId) )
       );
+      toast.success("تم قبول العميل")
     } else  
         toast.error (msg);
 
@@ -25,17 +27,17 @@ export default function Providers() {
   }
 
     useEffect( () => {
-     async function loadUser(status) {
+     async function loadClients(status) {
       setLoading(true);
-      const  {  success, data, msg }  = await providers.list(status);      
+      const  {  success, data, msg }  = await apiClients.list(status);      
       if (success)        
-          setProviders(Array.isArray(data) ? data : []);
+          setClients(Array.isArray(data) ? data : []);
         else 
           toast.error(msg);        
         setLoading(false);
       }    
 
-    loadUser(status);
+    loadClients(status);
   }, []);
 
   return (
@@ -47,10 +49,11 @@ export default function Providers() {
           justifyContent: "space-between",
         }}
       >
-        <h4 style={{ margin: 0 }}>إدارة مزودي الخدمة</h4>
+        <h4 style={{ margin: 0 }}> العملاء قيد الانتظار</h4>
       </div>
 
       
+      {loading && <Loading />}
 
       <div style={{ marginTop: 12 }}>
         <div
@@ -66,28 +69,29 @@ export default function Providers() {
             <thead>
               <tr>
                 <th>الاسم</th>
-                <th>الوصف</th>                
-                <th>الحالة</th>
+                <th>عدد سنوات  الخبرة</th>                
                 <th style={{ width: 180 }}>إجراءات</th>
               </tr>
             </thead>
             <tbody>
-              {Providers.map((s) => (
-                <tr key={s.id}>
+              {clients.map((s , i) => (
+                <tr key={i}>
                   <td>{s.name}</td>
-                  <td>{s.profile?.experience_start}</td>
-                  <td>{s.status == 'active' ? 'فعال' : 'قيد الانتظار' } </td>
+                  <td>{s.experience}</td>
                   <td>
                     <button
-                      onClick={() => handleToggle(s.id)}
-                      className= {`btn ${s.accepted?'btn-danger':'btn-success-light '}  ms-2`}
+                      onClick={() => handleAccept(s.id)}
+                      className= {`btn btn-outline-warning border border-warning`}
                     >
                      { saving?  'جاري القبول':'قبول'} 
-                    </button>                    
+                    </button> 
+                    <button className="btn btn-outline-primary border border-primary me-2">
+                      تفاصيل
+                    </button>                   
                   </td>
                 </tr>
               ))}
-              {Providers.length === 0 && !loading && (
+              {clients.length === 0 && !loading && (
                 <tr>
                   <td colSpan={2} className="empty-state">
                     لا توجد بيانات

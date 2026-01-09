@@ -4,12 +4,12 @@ import Loading from "../shared/Loading";
 import NotificationBox from "../shared/NotificationBox";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { notifications } from "./../../services/api";
+import { notifications } from "../../services/api";
 
-export default function ProviderNavBar() {
+export default function clientNavBar() {
   const user = auth.currentUser();
   const navigate = useNavigate();
-  const [unreadNotificationsCount, setUnreadNotificationsCount] = useState([]);
+  const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
 
@@ -23,10 +23,11 @@ export default function ProviderNavBar() {
 
   useEffect(() => {
     const getUnreadNotifications = async () => {
-      setLoading(true);
-      const { result, data, text } = await notifications.unreadCount();
+      setLoading(true);     
+      const { success, data, msg } = await notifications.unreadCount();
       console.log(data);
-      if (result) setUnreadNotificationsCount(data);
+      if (success) 
+        setUnreadNotificationsCount(data);
       else toast.error(text);
       setLoading(false);
     };
@@ -47,7 +48,7 @@ export default function ProviderNavBar() {
                 alt=""
                 width="50"
                 className="logo p-1 "
-              />
+              />              
             </Link>
             <button
               className="navbar-toggler"
@@ -82,7 +83,7 @@ export default function ProviderNavBar() {
             </div>
             <div className="collapse navbar-collapse" id="navbarCollapse">
               <div className="navbar-nav ms-auto py-0 fs-4">
-                <NavLink to="/provider" className="nav-item nav-link" end>
+                <NavLink to="/clients" className="nav-item nav-link" end>
                   الرئيسية
                 </NavLink>
 
@@ -95,7 +96,7 @@ export default function ProviderNavBar() {
                 </NavLink>
                 <NavLink to="projects/new" className="nav-item nav-link">
                   المشاريع الجديدة
-                </NavLink>
+                </NavLink>               
               </div>
 
               <ul className="navbar-nav align-items-center fs-5">

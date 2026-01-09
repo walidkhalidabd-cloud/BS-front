@@ -50,7 +50,7 @@ export default function Projects() {
               <td>{s.area}</td>
               <td>{s.location_details}</td>
               <td>
-                <Link to={`/provider/project-details/${s.id}`} className="btn btn-warning btn-sm">
+                <Link to={`/client/project-details/${s.id}`} className="btn btn-warning btn-sm">
                   تفاصيل
                 </Link>
               </td>

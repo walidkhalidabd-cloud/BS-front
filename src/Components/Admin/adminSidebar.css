@@ -27,11 +27,13 @@
   display: inline-block;
   font-family: "Cairo", sans-serif;
   font-size: 0.8em;
+  border-radius: 0;
 }
 .admin-sidebar a.item:hover {
   background: var(--primary-light);
 }
 .admin-sidebar a.item.active {
-  background: var(--warning-primary-2);
+  background: rgba(241, 162, 26, 0.1);
   color: var(--warning-dark);
+  border-right: solid var(--secondary-color);  
 }
