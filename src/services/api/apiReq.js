@@ -50,13 +50,16 @@ const sendRequest = async ({
     // the server responded with a status code out of 2xx
   } catch (error) {
     // the server responded with 422
-    if (error.status == 422)
+    if (error.status == 422){
+    console.log("422 response", error.response);
       return {
         success: false,
         status: error.status,
-        msg: "بعض الحقول غير صحيحة، يرجى التحقق.",
+        msg: " البيانات المدخلة غير صحيحة.",
         data: error.response.data.errors,
       };    
+
+    }
     else if (error.response) {
       console.log("api error response" , error.response);
       return {

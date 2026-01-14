@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { clients as apiClients } from "../../../services/api";
+import { admin as apiAdmin } from "../../../services/api";
 import { useParams } from "react-router-dom";
 import Loading from "../../../Components/shared/Loading";
 import { toast } from "react-toastify";
@@ -14,7 +14,7 @@ export default function Clients() {
 
   async function handleAccept( clientId) {
     setSaving(true);
-     const {success,  msg} = await apiClients.accept(clientId);  
+     const {success,  msg} = await apiAdmin.acceptClient(clientId);  
      if(success){
       setClients((prev) =>
           prev.filter(s => (s.id !== clientId) )
@@ -29,7 +29,7 @@ export default function Clients() {
     useEffect( () => {
      async function loadClients(status) {
       setLoading(true);
-      const  {  success, data, msg }  = await apiClients.list(status);      
+      const  {  success, data, msg }  = await apiAdmin.listClients(status);      
       if (success)        
           setClients(Array.isArray(data) ? data : []);
         else 

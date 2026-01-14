@@ -20,6 +20,7 @@ import Role from "./pages/Admin/partials/Role";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Forbidden from "./pages/home/partials/Forbidden";
 import Clients from "./pages/Admin/partials/Clients";
+import AddOffer from "./pages/Client/partials/AddOffer";
 
 const router = createBrowserRouter([
   {
@@ -88,14 +89,18 @@ const router = createBrowserRouter([
   },
   {
     path: "/client",
-    element: <HomeClient />,
+    element: (
+      <ProtectedRoute type="client">
+        <HomeClient />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
         element: <HomeMainClient />,
       },
       {
-        path: "projects/:status",
+        path: "projects/:projectStatus",
         element: <Projects />,
       },
       {
@@ -103,8 +108,8 @@ const router = createBrowserRouter([
         element: <ProjectDetails />,
       },
       {
-        path: "add-offer",
-        element: <AddProject />,
+        path: "add-offer/:projectId",
+        element: <AddOffer />,
       },
     ],
   },

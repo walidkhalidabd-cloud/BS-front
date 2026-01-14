@@ -1,34 +1,50 @@
 import { useEffect, useState } from "react";
-import { projects as apiProjects } from "../../../services/api";
+import { client as apiClient } from "../../../services/api";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Projects() {
-  const { status } = useParams();
-  // console.log(status);
+  const { projectStatus } = useParams();
+  // console.log("out" , projectStatus);
+
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    async function load({ status }) {
-      try {
-        setLoading(true);
-        const { success, status, data } = await apiProjects.list();
-        // console.log(projects);
+    async function load(projectStatus ) {
+
+      setLoading(true);
+      const apiFunc =
+        projectStatus == "new"
+          ? apiClient.getNewProjects
+          : apiClient.getProjects;
+      const { success, data, msg } = await apiFunc(projectStatus);
+      if (success) {
         setProjects(data);
-      } catch (err) {
-        console.error(err);
-        setError(err.message || "خطأ في تحميل البيانات");
-      } finally {
-        setLoading(false);
-      }
+      } else toast.error(msg);
+      setLoading(false);
     }
-    load(status);
+    load(projectStatus);
   }, []);
   // ['start_date' , 'end_date' , 'duration' , 'area' , 'location' ,
-  //     'description' , 'building_no'  ,'budget' ,  'note' , 'status' , 'project_type_id', 'customer_id' , 'performed_by']
+  //     'description' , 'building_no'  ,'budget' ,  'note' , 'status' , 'project_type_id', 'customer_id' , 'performed_by' ,'province_id']
   return (
     <div className="h-50vh mt-7 container">
       <h3 className="text-secondary text-center">المشاريع</h3>
-          {loading && <div className="mt-7" style={{position:'absolute',inset:0,background:'rgba(255,255,255,0.6)',display:'flex',alignItems:'center',justifyContent:'center'}}>جارٍ التحميل...</div>}
+      {loading && (
+        <div
+          className="mt-7"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "rgba(255,255,255,0.6)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          جارٍ التحميل...
+        </div>
+      )}
 
       <table className="table">
         <thead>
@@ -50,7 +66,10 @@ export default function Projects() {
               <td>{s.area}</td>
               <td>{s.location_details}</td>
               <td>
-                <Link to={`/client/project-details/${s.id}`} className="btn btn-warning btn-sm">
+                <Link
+                  to={`/client/project-details/${s.id}`}
+                  className="btn btn-warning btn-sm"
+                >
                   تفاصيل
                 </Link>
               </td>
@@ -58,7 +77,7 @@ export default function Projects() {
           ))}
           {projects.length === 0 && !loading && (
             <tr>
-              <td colSpan={5}>لا توجد بيانات</td>
+              <td colSpan={6} className="text-center">لا توجد بيانات</td>
             </tr>
           )}
         </tbody>

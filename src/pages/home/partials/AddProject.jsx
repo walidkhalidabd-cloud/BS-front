@@ -1,22 +1,29 @@
 import { projects as apiProjects } from "../../../services/api";
 import { projectTypes as apiProjectTypes } from "../../../services/api";
 import { documentTypes as apiDocumentTypes } from "../../../services/api";
+import { provinces as apiProvinces } from "../../../services/api";
+
 import Select from "react-select";
 import MyInput from "../../../components/form/MyInput";
 import FileRow from "../../../Components/form/FileRow";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../../Components/shared/Loading";
 import { toast } from "react-toastify";
 
 export default function AddProject() {
-  const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
   const [projectTypes, setProjectTypes] = useState([]);
   const [documentTypes, setDocumentTypes] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
+  const [filesData, setFilesData] = useState([]);
+  const [provinces, setProvinces] = useState([]);
 
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1); // Go back one step in the history stack
+  };
   // One simple state for all form fields
   const [formData, setFormData] = useState({
     start_date: "",
@@ -26,9 +33,8 @@ export default function AddProject() {
     description: "",
     building_no: "",
     project_type_id: "",
+    province_id: null,
   });
-
-  const [filesData, setFilesData] = useState([]);
 
   // Helpers
   const normalizeValidationErrors = (errors) => {
@@ -99,7 +105,7 @@ export default function AddProject() {
       { file: null, type: "", description: "" },
     ]);
 
-    /** **************** handleSubmit **********************/
+  /** **************** handleSubmit **********************/
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -111,12 +117,18 @@ export default function AddProject() {
 
     // Convert select objects to IDs (send empty string if none)
     fd.append("project_type_id", formData.project_type_id?.id ?? "");
+    console.log(formData.province_id?.id ?? "");
+    fd.append("province_id", formData.province_id?.id ?? "");
 
     Object.keys(formData).forEach((key) => {
-      if (key !== "project_type_id") {
+      if (key !== "project_type_id" && key !== "province_id") {
         fd.append(key, formData[key] ?? "");
       }
     });
+
+    // fd.forEach((value, key) => {
+    //       console.log(key, value);
+    //     });
 
     // Always append documents fields (even if empty) so Laravel sees the keys
     // This ensures validation rules like 'documents.*.type' will trigger.
@@ -143,16 +155,20 @@ export default function AddProject() {
       setValidationErrors(normalized);
       toast.error(response.msg);
       // Other errors
-    } else
-      toast.error(response.msg);
-    
-      setLoading(false);
+    } else toast.error(response.msg);
+
+    setLoading(false);
   };
 
-    /** **************** loading initial values for lists **********************/
+  /** **************** loading initial values for lists **********************/
   useEffect(() => {
     async function load() {
       setLoading(true);
+      // fetch project types
+      const provinces = await apiProvinces();
+      if (provinces.success) setProvinces(provinces.data);
+      else toast.error(provinces.msg || "تعذر جلب المحافظات .");
+
       // fetch project types
       const types = await apiProjectTypes.list();
       if (types.success) setProjectTypes(types.data);
@@ -169,7 +185,7 @@ export default function AddProject() {
   }, []);
 
   return (
-    <div className="container-fluid bg-primary newsletter pt-5">
+    <div className="container-fluid bg-primary newsletter pt-5 min-vh-100">
       <div className="row g-0">
         <div className="col-md-5 p-5">
           <img
@@ -222,6 +238,27 @@ export default function AddProject() {
                 onChange={handleChange}
                 error={validationErrors.building_no}
               />
+
+              <div className="col-6 pt-.5 pe-2.5 text-black">
+                <Select
+                  className="react-select-container"
+                  classNamePrefix="react-select"
+                  name="province_id"
+                  value={formData.province_id}
+                  options={provinces}
+                  getOptionLabel={(o) => o.name}
+                  getOptionValue={(o) => o.id}
+                  onChange={(selected) =>
+                    handleSelectChange(selected, "province_id")
+                  }
+                  placeholder="ابحث واختر المحافظة"
+                />
+                {validationErrors.province_id && (
+                  <small className="text-warning">
+                    {validationErrors.province_id[0]}
+                  </small>
+                )}
+              </div>
 
               <div className="col-6 pt-.5 pe-2.5 text-black">
                 <Select
@@ -291,9 +328,12 @@ export default function AddProject() {
                 {loading ? "جاري الإضافة..." : "إضافة مشروع"}
               </button>
 
-              <Link className="btn btn-primary mt-3 me-2" to="/">
+              <button
+                className="btn btn-primary mt-3 me-2"
+                onClick={handleGoBack}
+              >
                 عودة
-              </Link>
+              </button>
             </div>
           </form>
         </div>

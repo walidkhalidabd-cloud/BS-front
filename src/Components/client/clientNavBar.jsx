@@ -28,7 +28,7 @@ export default function clientNavBar() {
       console.log(data);
       if (success) 
         setUnreadNotificationsCount(data);
-      else toast.error(text);
+      else toast.error(msg);
       setLoading(false);
     };
 
@@ -59,7 +59,7 @@ export default function clientNavBar() {
               <span className="fa fa-bars"></span>
             </button>
             {notificationOpen && (
-              <NotificationBox setNotificationOpen={setNotificationOpen} />
+              <NotificationBox setNotificationOpen={setNotificationOpen}  setUnreadNotificationsCount={setUnreadNotificationsCount}/>
             )}
             <div className="controls">
               <div
@@ -69,7 +69,7 @@ export default function clientNavBar() {
               >
                 <i className="fa fa-bell-o"></i>
                 <span
-                  className="position-absolute bg-primary rounded-circle px-1 fw-bold text-white"
+                  className="position-absolute bg-warning rounded-circle px-1 fw-bold text-dark"
                   style={{
                     fontSize: "10px",
                     bottom: "0px",

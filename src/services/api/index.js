@@ -1,3 +1,4 @@
+import sendRequest from './apiReq'
 export { default as authentication} from './authentication';
 export { default as projects} from './projects';
 export { default as projectTypes} from './projectTypes'
@@ -7,4 +8,8 @@ export { default as roles} from './roles';
 export { default as accountStatuses} from './accountStatuses';
 export { default as auth} from './authentication';
 export {default as notifications} from './notifications';
-export {default as clients} from './clients';
+export {default as client} from './client';
+export {default as admin} from './admin';
+
+export const provinces =  () => sendRequest({verb: "get", "url" : "/provinces"});
+

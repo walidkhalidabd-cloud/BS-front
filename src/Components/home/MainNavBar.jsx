@@ -58,7 +58,7 @@ export default function MainNavBar() {
             </NavLink>
 
             <NavLink to="/x#" className="nav-item nav-link">
-              اتصل بنا 
+              اتصل بنا
             </NavLink>
           </div>
           <ul className="navbar-nav align-items-center fs-5">
@@ -78,6 +78,10 @@ export default function MainNavBar() {
                     {userType == "admin" ? (
                       <Link className="dropdown-item " to="/admin">
                         إدارة الموقع
+                      </Link>
+                    ) : userType == "client" ? (
+                      <Link className="dropdown-item" to="/client">
+                        إدارة المشاريع
                       </Link>
                     ) : (
                       <Link className="dropdown-item" to="#">

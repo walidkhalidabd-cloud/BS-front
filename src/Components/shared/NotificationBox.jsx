@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 
-export default function NotificationBox({ setNotificationOpen }) {
+export default function NotificationBox({ setNotificationOpen,setUnreadNotificationsCount }) {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -20,6 +20,8 @@ export default function NotificationBox({ setNotificationOpen }) {
       });
       console.log("read");
       setNotifications(readNotifications);
+      setUnreadNotificationsCount(0);
+
     } else toast.error(msg);
   };
 
