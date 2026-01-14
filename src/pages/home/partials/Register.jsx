@@ -38,7 +38,7 @@ const Register = () => {
 
   const userTypesRadio = [
     { label: "زبون", value: "customer" },
-    { label: "عميل", value: "client" },
+    { label: "مزود", value: "client" },
   ];
 
   const handleChange = (e) => {
@@ -73,6 +73,7 @@ const Register = () => {
       else navigate("/");
     } else if (status == 422) {
       toast.warn("بعص الحقول غير صحيحة");
+      console.log(data);
       setValidationErrors(data);
       console.log(data);
     } else toast.error(msg);

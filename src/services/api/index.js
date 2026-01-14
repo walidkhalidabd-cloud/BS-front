@@ -8,6 +8,7 @@ export { default as roles} from './roles';
 export { default as auth} from './authentication';
 export {default as notifications} from './notifications';
 export {default as client} from './client';
+export {default as customer} from './customer';
 export {default as admin} from './admin';
 
 export const provinces =  () => sendRequest({verb: "get", "url" : "/provinces"});

@@ -5,6 +5,7 @@ import Register from "./pages/home/partials/Register";
 import NotFound from "./pages/NotFound";
 import HomeMain from "./pages/home/partials/HomeMain";
 import AddProject from "./pages/home/partials/AddProject";
+import CustomerProject from "./pages/home/partials/Projects";
 
 import HomeClient from "./pages/client/Home";
 import HomeMainClient from "./pages/client/partials/HomeMain";
@@ -49,6 +50,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <AddProject />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "projects",
+        element: (
+          <ProtectedRoute>
+            <CustomerProject />
           </ProtectedRoute>
         ),
       },

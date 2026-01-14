@@ -47,10 +47,10 @@ export default function MainNavBar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav ms-auto py-0 fs-4">
-            <NavLink to="/" className="nav-item nav-link" end>
+            <NavLink to="/" className="nav-item nav-link">
               الرئيسية
             </NavLink>
-            <Link to="/guideline" className="nav-item nav-link" end>
+            <Link to="/guideline" className="nav-item nav-link">
               تعليمات إرشادية
             </Link>
             <a
@@ -59,7 +59,9 @@ export default function MainNavBar() {
               onClick={(e) => {
                 e.preventDefault();
                 const scrollToServices = () => {
-                  document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
+                  document
+                    .getElementById("services")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 };
                 if (window.location.pathname !== "/") {
                   navigate("/");
@@ -72,9 +74,33 @@ export default function MainNavBar() {
               الخدمات
             </a>
 
-            <NavLink to="/x#" className="nav-item nav-link" >
-              اتصل بنا
-            </NavLink>
+            {user && userType == "customer" && (
+              <ul className="navbar-nav align-items-center fs-5">
+                <li className="nav-item dropdown ms-7">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    متابعة
+                  </a>
+                  <ul className="dropdown-menu ">
+                    <li>
+                      <Link className="dropdown-item" to="projects">
+                        مشاريعك
+                      </Link>
+                    </li>                   
+                    <li>
+                     <Link className="dropdown-item" to="add-project">
+                        مشروع جديد
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            )}
           </div>
           <ul className="navbar-nav align-items-center fs-5">
             {user ? (
