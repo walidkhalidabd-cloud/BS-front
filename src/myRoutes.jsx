@@ -21,6 +21,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import Forbidden from "./pages/home/partials/Forbidden";
 import Clients from "./pages/Admin/partials/Clients";
 import AddOffer from "./pages/Client/partials/AddOffer";
+import Guideline from "./pages/home/partials/Guideline";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "guideline",
+        element: <Guideline />,
       },
       {
         path: "add-project",

@@ -50,14 +50,29 @@ export default function MainNavBar() {
             <NavLink to="/" className="nav-item nav-link" end>
               الرئيسية
             </NavLink>
-            <NavLink to="/x#" className="nav-item nav-link">
-              حول المنصة
-            </NavLink>
-            <NavLink to="/x#" className="nav-item nav-link">
+            <Link to="/guideline" className="nav-item nav-link" end>
+              تعليمات إرشادية
+            </Link>
+            <a
+              href="#services"
+              className="nav-item nav-link"
+              onClick={(e) => {
+                e.preventDefault();
+                const scrollToServices = () => {
+                  document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
+                };
+                if (window.location.pathname !== "/") {
+                  navigate("/");
+                  setTimeout(scrollToServices, 150);
+                } else {
+                  scrollToServices();
+                }
+              }}
+            >
               الخدمات
-            </NavLink>
+            </a>
 
-            <NavLink to="/x#" className="nav-item nav-link">
+            <NavLink to="/x#" className="nav-item nav-link" >
               اتصل بنا
             </NavLink>
           </div>
