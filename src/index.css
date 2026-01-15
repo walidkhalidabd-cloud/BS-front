@@ -104,6 +104,10 @@ a:hover {
   bottom: .4em;
   border-radius: 5px;
 }
+.collapse a{
+  margin-left: 0.4em;
+}
+
 
 .navbar-brand {
   left: 20px;
@@ -135,6 +139,17 @@ a:hover {
 
 .active {
   color: var(--secondary-color) !important;
+}
+
+.general-container{
+  min-height: 80vh;
+  padding: 100px 10% ;
+}
+.general-container h4{
+  margin-top: 1em;
+}
+.general-container li {
+  margin-right: 2em;
 }
 /* ************ auth *************** */
 .auth-container .row{

@@ -23,6 +23,7 @@ import Forbidden from "./pages/home/partials/Forbidden";
 import Clients from "./pages/Admin/partials/Clients";
 import AddOffer from "./pages/Client/partials/AddOffer";
 import Guideline from "./pages/home/partials/Guideline";
+import About from "./pages/home/partials/About";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "guideline",
         element: <Guideline />,
+      },
+      {
+        path: "about",
+        element: <About />,
       },
       {
         path: "add-project",

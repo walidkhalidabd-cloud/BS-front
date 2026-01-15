@@ -34,6 +34,7 @@ export default function AddProject() {
     building_no: "",
     project_type_id: "",
     province_id: null,
+    note: ""
   });
 
   // Helpers

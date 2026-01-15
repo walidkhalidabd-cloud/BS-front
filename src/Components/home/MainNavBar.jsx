@@ -16,7 +16,6 @@ export default function MainNavBar() {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
-        // إزاحة الأزرار للأعلى عند التمرير
         document.getElementById("MainNavBar").style.backgroundColor =
           "#1e4770c2";
       } else {
@@ -50,9 +49,7 @@ export default function MainNavBar() {
             <NavLink to="/" className="nav-item nav-link">
               الرئيسية
             </NavLink>
-            <Link to="/guideline" className="nav-item nav-link">
-              تعليمات إرشادية
-            </Link>
+
             <a
               href="#services"
               className="nav-item nav-link"
@@ -73,9 +70,43 @@ export default function MainNavBar() {
             >
               الخدمات
             </a>
+            
+            <Link to="/guideline" className="nav-item nav-link">
+              تعليمات إرشادية
+            </Link>
+            <Link to="/about" className="nav-item nav-link">
+              حول منصة بناءك
+            </Link>
+          </div>
+          <ul className="navbar-nav align-items-center fs-5">
+            {user ? (
+              <>
+                {userType == "customer" && (
+                  <li className="nav-item dropdown ms-7">
+                    <a
+                      className="nav-link dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      مشاريع
+                    </a>
+                    <ul className="dropdown-menu ">
+                      <li>
+                        <Link className="dropdown-item" to="projects">
+                          مشاريعك السابقة
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="add-project">
+                          مشروع جديد
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                )}
 
-            {user && userType == "customer" && (
-              <ul className="navbar-nav align-items-center fs-5">
                 <li className="nav-item dropdown ms-7">
                   <a
                     className="nav-link dropdown-toggle"
@@ -84,63 +115,32 @@ export default function MainNavBar() {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    متابعة
+                    {user}
                   </a>
                   <ul className="dropdown-menu ">
                     <li>
-                      <Link className="dropdown-item" to="projects">
-                        مشاريعك
-                      </Link>
-                    </li>                   
+                      {userType == "admin" ? (
+                        <Link className="dropdown-item " to="/admin">
+                          إدارة الموقع
+                        </Link>
+                      ) : userType == "client" ? (
+                        <Link className="dropdown-item" to="/client">
+                          إدارة المشاريع
+                        </Link>
+                      ) : (
+                        <Link className="dropdown-item" to="#">
+                          الملف الشخصي
+                        </Link>
+                      )}
+                    </li>
                     <li>
-                     <Link className="dropdown-item" to="add-project">
-                        مشروع جديد
-                      </Link>
+                      <button className="nav-link mx-auto" onClick={logout}>
+                        تسجيل خروج
+                      </button>
                     </li>
                   </ul>
                 </li>
-              </ul>
-            )}
-          </div>
-          <ul className="navbar-nav align-items-center fs-5">
-            {user ? (
-              <li className="nav-item dropdown ms-7">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  {user}
-                </a>
-                <ul className="dropdown-menu ">
-                  <li>
-                    {userType == "admin" ? (
-                      <Link className="dropdown-item " to="/admin">
-                        إدارة الموقع
-                      </Link>
-                    ) : userType == "client" ? (
-                      <Link className="dropdown-item" to="/client">
-                        إدارة المشاريع
-                      </Link>
-                    ) : (
-                      <Link className="dropdown-item" to="#">
-                        الملف الشخصي
-                      </Link>
-                    )}
-                  </li>
-
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <button className="nav-link mx-auto" onClick={logout}>
-                      تسجيل خروج
-                    </button>
-                  </li>
-                </ul>
-              </li>
+              </>
             ) : (
               <li className="nav-item d-flex ms-7">
                 <>
