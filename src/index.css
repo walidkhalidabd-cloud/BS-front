@@ -152,7 +152,7 @@ a:hover {
   margin-right: 2em;
 }
 /* ************ auth *************** */
-.auth-container .row{
+.auth-container .auth-row{
   height: 70vh;
   min-height: fit-content;
 }

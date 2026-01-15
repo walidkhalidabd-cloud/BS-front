@@ -165,7 +165,7 @@ export default function AddProject() {
   useEffect(() => {
     async function load() {
       setLoading(true);
-      // fetch project types
+      // fetch provinces
       const provinces = await apiProvinces();
       if (provinces.success) setProvinces(provinces.data);
       else toast.error(provinces.msg || "تعذر جلب المحافظات .");

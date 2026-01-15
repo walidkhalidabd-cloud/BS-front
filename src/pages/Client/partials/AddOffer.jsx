@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { client } from "../../../services/api";
+import { documentTypes as apiDocumentTypes } from "../../../services/api";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import FileRow from "../../../Components/form/FileRow";
 
 export default function AddOffer() {
   const { projectId } = useParams();
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-  const navigate = useNavigate();
+  const [filesData, setFilesData] = useState([]);
+  const [documentTypes, setDocumentTypes] = useState([]);
 
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     cost: "",
     duration: "",
     details: "",
-    // file: null, // تجهيز للملف
   });
+
 
   const handleGoBack = () => {
     navigate(-1); // Go back one step in the history stack
@@ -30,6 +34,36 @@ export default function AddOffer() {
     });
   };
 
+  // File row handlers
+  const handleFileChange = (i, e) => {
+    const updated = [...filesData];
+    updated[i] = { ...(updated[i] || {}), file: e.target.files[0] || null };
+    setFilesData(updated);
+  };
+
+  const handleFileMeta = (i, e) => {
+    const { name, value } = e.target;
+    const updated = [...filesData];
+    updated[i] = { ...(updated[i] || {}), [name]: value };
+    setFilesData(updated);
+  };
+
+  const handleFileType = (i, selected) => {
+    const updated = [...filesData];
+    updated[i] = { ...(updated[i] || {}), type: selected };
+    setFilesData(updated);
+  };
+
+  const removeFileRow = (index) => {
+    setFilesData((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const addFileInput = () =>
+    setFilesData((prev) => [
+      ...prev,
+      { file: null, type: "", description: "" },
+    ]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setValidationErrors([]);
@@ -39,10 +73,18 @@ export default function AddOffer() {
     formData.append("cost", form.cost);
     formData.append("duration", form.duration);
     formData.append("details", form.details);
-
-    // if (form.file) {
-    //   formData.append("file", form.file);
-    // }
+    
+    filesData.forEach((f, i) => {
+      // append file (may be null -> append empty string)
+      formData.append(`documents[${i}][file]`, f?.file ?? "");
+      // append type id or empty
+      formData.append(`documents[${i}][type]`, f?.type?.id ?? "");
+      // append description or empty
+      formData.append(`documents[${i}][description]`, f?.description ?? "");
+    });
+    if (form.file) {
+      formData.append("file", form.file);
+    }
 
     const { success, data, msg, status } = await client.addOffer(
       projectId,
@@ -58,6 +100,18 @@ export default function AddOffer() {
     setLoading(false);
   };
 
+  useEffect(() => {
+    async function load() {
+      setLoading(true);    
+      // fetch document types
+      const docs = await apiDocumentTypes.list();
+      if (docs.success) setDocumentTypes(docs.data);
+      else toast.error(docs.msg || "تعذر جلب أنواع المستندات.");
+
+      setLoading(false);
+    }
+    load();
+  }, []);
   return (
     <div className="container-fluid bg-primary newsletter pt-5 min-vh-100">
       <div className="row">
@@ -109,11 +163,26 @@ export default function AddOffer() {
             )}
           </div>
 
-          {/* <div>
-        <label>ملف مرفق (اختياري)</label>
-        <input type="file" name="file" onChange={handleChange} />
-        {validationErrors.file && <small>{validationErrors.file[0]}</small>}
-      </div> */}
+          <button
+            type="button"
+            className="btn btn-primary mt-2"
+            onClick={addFileInput}
+          >
+            <i className="fa fa-plus"></i> إضافة ملف
+          </button>
+          {filesData.map((file, i) => (
+            <FileRow
+              key={i}
+              index={i}
+              data={file}
+              documentTypes={documentTypes}
+              onFileChange={handleFileChange}
+              onMetaChange={handleFileMeta}
+              onTypeChange={handleFileType}
+              onRemove={removeFileRow}
+              errors={validationErrors[`documents.${i}`]} // pass per-row errors
+            />
+          ))}
 
           <div className="text-center">
             <button

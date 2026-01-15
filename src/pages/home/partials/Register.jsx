@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../../services/api";
+import FileRow from "../../../Components/form/FileRow";
 
+import { documentTypes as apiDocumentTypes } from "../../../services/api";
 import { roles as apiRoles } from "../../../services/api";
 import Select from "react-select";
 import MyInput from "../../../components/form/MyInput";
@@ -14,6 +16,8 @@ const Register = () => {
   const navigate = useNavigate();
   const [roles, setRoles] = useState([]);
   const [validationErrors, setValidationErrors] = useState([]);
+  const [documentTypes, setDocumentTypes] = useState([]);
+  const [filesData, setFilesData] = useState([]);
 
   const userTypes = {
     customer: {
@@ -28,8 +32,8 @@ const Register = () => {
       password: "",
       password_confirmation: "",
       name: "",
-      type: "client",       
-      experience_start: '',
+      type: "client",
+      experience_start: "",
       role_id: null,
     },
   };
@@ -46,7 +50,6 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  
   const handleUserTypeChange = (e) => {
     const selectedType = e.target.value;
     setUserType(selectedType);
@@ -57,14 +60,63 @@ const Register = () => {
     setFormData({ ...formData, [name]: selectedOption });
   };
 
+  // File row handlers
+  const handleFileChange = (i, e) => {
+    const updated = [...filesData];
+    updated[i] = { ...(updated[i] || {}), file: e.target.files[0] || null };
+    setFilesData(updated);
+  };
+
+  const handleFileMeta = (i, e) => {
+    const { name, value } = e.target;
+    const updated = [...filesData];
+    updated[i] = { ...(updated[i] || {}), [name]: value };
+    setFilesData(updated);
+  };
+
+  const handleFileType = (i, selected) => {
+    const updated = [...filesData];
+    updated[i] = { ...(updated[i] || {}), type: selected };
+    setFilesData(updated);
+  };
+
+  const removeFileRow = (index) => {
+    setFilesData((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const addFileInput = () =>
+    setFilesData((prev) => [
+      ...prev,
+      { file: null, type: "", description: "" },
+    ]);
+
   /********* Submit ***********/
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setValidationErrors({});
-    formData.role_id = formData.role_id?formData.role_id.id : null;
-    console.log(formData);
-    const { status, success, data, msg } = await auth.register(formData);
+
+    const fd = new FormData();
+
+    fd.append("role_id", formData.role_id?.id ?? "");
+
+    Object.keys(formData).forEach((key) => {
+      if (key !== "role_id") {
+        fd.append(key, formData[key] ?? "");
+      }
+    });
+
+    // fd.forEach((value, key) => {
+    //       console.log(key, value);
+    //     });
+
+    filesData.forEach((f, i) => {
+      fd.append(`documents[${i}][file]`, f?.file ?? "");
+      fd.append(`documents[${i}][type]`, f?.type?.id ?? "");
+      fd.append(`documents[${i}][description]`, f?.description ?? "");
+    });
+
+    const { status, success, data, msg } = await auth.register(fd);
     if (success) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("name", data.name);
@@ -82,21 +134,30 @@ const Register = () => {
   };
   //تحميل
   useEffect(() => {
+    setLoading(true);
+
     async function loadRoles() {
       const { success, data, msg } = await apiRoles.list();
       if (success) setRoles(data);
       else toast.error(msg);
+    }
+    async function loadDocumentTypes() {
+      const docs = await apiDocumentTypes.list();
+      if (docs.success) setDocumentTypes(docs.data);
+      else toast.error(docs.msg || "تعذر جلب أنواع المستندات.");
+
       setLoading(false);
     }
     loadRoles();
+    loadDocumentTypes();
   }, []);
 
   return (
     <div className="container auth-container">
-      <div className="row w-100 mt-5">
+      <div className="row auth-row w-100 mt-5">
         <div className="col-6 p-5 d-flex align-items-center">
           <form className="w-100" onSubmit={handleSubmit}>
-                      {loading && <Loading />}            
+            {loading && <Loading />}
             <h3 className="mb-3 text-secondary text-center">إنشاء حساب</h3>
             <Radio
               label="نوع المستخدم"
@@ -142,7 +203,7 @@ const Register = () => {
             />
 
             {formData.type === "client" && (
-              <>                
+              <>
                 <MyInput
                   placeholder="تاريخ بدءالعمل"
                   type="date"
@@ -173,6 +234,31 @@ const Register = () => {
                 </div>
               </>
             )}
+            {formData.type === "client" && (
+              <button
+                type="button"
+                className="btn btn-primary mt-2"
+                onClick={addFileInput}
+              >
+                <i className="fa fa-plus"></i> إضافة ملف
+              </button>
+            )}
+
+            {/* Files rows */}
+            {filesData.map((file, i) => (
+              <FileRow
+                key={i}
+                index={i}
+                data={file}
+                documentTypes={documentTypes}
+                onFileChange={handleFileChange}
+                onMetaChange={handleFileMeta}
+                onTypeChange={handleFileType}
+                onRemove={removeFileRow}
+                errors={validationErrors[`documents.${i}`]} // pass per-row errors
+              />
+            ))}
+
             <div className="text-center mt-3 ">
               <button
                 className="btn btn-secondary fs-5"
@@ -187,7 +273,7 @@ const Register = () => {
             </div>
             <div className="text-center mt-3">
               <Link to="/login" className="text-warning">
-                 لديك حساب
+                لديك حساب
               </Link>
             </div>
           </form>
