@@ -1,16 +1,23 @@
 import { createBrowserRouter } from "react-router-dom";
+import NotFound from "./pages/NotFound";
+
 import Home from "./pages/home/Home";
 import Login from "./pages/home/partials/Login";
 import Register from "./pages/home/partials/Register";
-import NotFound from "./pages/NotFound";
 import HomeMain from "./pages/home/partials/HomeMain";
 import AddProject from "./pages/home/partials/AddProject";
 import CustomerProject from "./pages/home/partials/Projects";
+import Forbidden from "./pages/home/partials/Forbidden";
+import Guideline from "./pages/home/partials/Guideline";
+import About from "./pages/home/partials/About";
+import ClientType from "./pages/home/partials/ClientType";
 
 import HomeClient from "./pages/client/Home";
 import HomeMainClient from "./pages/client/partials/HomeMain";
+import AddOffer from "./pages/Client/partials/AddOffer";
 
 import AdminHome from "./pages/Admin/partials/Home";
+import Clients from "./pages/Admin/partials/Clients";
 import Projects from "./pages/client/partials/Projects";
 import ProjectDetails from "./pages/client/partials/ProjectDetails";
 import Dashboard from "./pages/Admin/Dashboard";
@@ -18,12 +25,9 @@ import DocumentType from "./pages/Admin/partials/DocumentType";
 import ContactType from "./pages/Admin/partials/ContactType";
 import ProjectType from "./pages/Admin/partials/ProjectType";
 import Role from "./pages/Admin/partials/Role";
+
 import ProtectedRoute from "./Components/ProtectedRoute";
-import Forbidden from "./pages/home/partials/Forbidden";
-import Clients from "./pages/Admin/partials/Clients";
-import AddOffer from "./pages/Client/partials/AddOffer";
-import Guideline from "./pages/home/partials/Guideline";
-import About from "./pages/home/partials/About";
+
 
 const router = createBrowserRouter([
   {
@@ -49,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <About />,
+      },
+      {
+        path: "clients/:role",
+        element: <ClientType />,
       },
       {
         path: "add-project",

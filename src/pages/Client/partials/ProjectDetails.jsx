@@ -80,10 +80,7 @@ export default function ProjectDetails() {
               <span className="project-label">ملاحظات</span> {project.note}
             </div>
             {project.documets?.map((document) => (
-              <div>
-                <a href={document.url} download>
-                  Download
-                </a>{" "}
+              <div>                
                 <a href={document.url} target="_blank">
                   view
                 </a>
