@@ -87,12 +87,12 @@ export default function clientNavBar() {
                   الرئيسية
                 </NavLink>
 
-                <NavLink to="projects/contracted" className="nav-item nav-link">
+                <NavLink to="projects/active" className="nav-item nav-link">
                   المشاريع النشطة
                 </NavLink>
 
-                <NavLink to="projects/finished" className="nav-item nav-link">
-                  المشاريع المنتهية
+                <NavLink to="projects/completed" className="nav-item nav-link">
+                  المشاريع المكتملة
                 </NavLink>
                 <NavLink to="projects/new" className="nav-item nav-link">
                   المشاريع الجديدة

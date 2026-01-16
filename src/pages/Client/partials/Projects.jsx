@@ -3,31 +3,35 @@ import { client as apiClient, client } from "../../../services/api";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export default function Projects({active}) {
+export default function Projects() {
   const { projectStatus } = useParams();
+  // console.log(projectStatus);
+  const statusLabel =
+    projectStatus === "new"
+      ? "الجديدة"
+      : projectStatus === "active"
+      ? "النشطة"
+      : "المكتملة";
   const navigator = useNavigate();
-  // console.log("out" , projectStatus);
 
   const [projects, setProjects] = useState([]);
-// const {active , active } = useState(second);
+  const [active, setActive] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
-  const handeDetails = (id)=> {
+  const handeDetails = (id) => {
     if (!active)
-      toast.warning("الحساب غير مفعل لا يمكن الإطلاع على تفاصيل العروض")
-    else
-      navigator(`/client/project-details/${id}`)
+      toast.warning("الحساب غير مفعل لا يمكن الإطلاع على تفاصيل العروض");
+    else navigator(`/client/project-details/${id}`);
+  };
 
-  }
   useEffect(() => {
-    async function load(projectStatus ) {
-
+    async function load(projectStatus) {
       setLoading(true);
       const apiFunc =
         projectStatus == "new"
           ? apiClient.getNewProjects
           : apiClient.getProjects;
+      console.log(apiFunc);
       const { success, data, msg } = await apiFunc(projectStatus);
       if (success) {
         setProjects(data);
@@ -35,21 +39,22 @@ export default function Projects({active}) {
       setLoading(false);
     }
     load(projectStatus);
+  }, [projectStatus]);
 
-
+  useEffect(() => {
     const isActive = async () => {
       const { success, data, msg } = await client.isActive();
       console.log(data.is_active);
       if (success) setActive(data.is_active);
       else toast.error(msg);
     };
-    // isActive();
+    isActive();
   }, []);
   // ['start_date' , 'end_date' , 'duration' , 'area' , 'location' ,
   //     'description' , 'building_no'  ,'budget' ,  'note' , 'status' , 'project_type_id', 'customer_id' , 'performed_by' ,'province_id']
   return (
     <div className="h-50vh mt-7 container">
-      <h3 className="text-secondary text-center">المشاريع</h3>
+      <h3 className="text-secondary text-center">المشاريع {statusLabel}</h3>
       {loading && (
         <div
           className="mt-7"
@@ -86,7 +91,8 @@ export default function Projects({active}) {
               <td>{s.area}</td>
               <td>{s.location_details}</td>
               <td>
-                <button onClick={() => handeDetails(s.id)}
+                <button
+                  onClick={() => handeDetails(s.id)}
                   className="btn btn-warning btn-sm"
                 >
                   تفاصيل
@@ -96,7 +102,9 @@ export default function Projects({active}) {
           ))}
           {projects.length === 0 && !loading && (
             <tr>
-              <td colSpan={6} className="text-center">لا توجد بيانات</td>
+              <td colSpan={6} className="text-center">
+                لا توجد بيانات
+              </td>
             </tr>
           )}
         </tbody>

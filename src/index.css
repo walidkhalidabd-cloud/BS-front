@@ -300,7 +300,8 @@ a:hover {
   color: #fff;
   padding: 2px 5px;
   display: inline-block;
-  width: 110px;
+  min-width: 110px;
+  width: fit-content;
   margin-left: 1em;
   border-radius: 10px;
 }

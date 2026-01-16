@@ -18,6 +18,7 @@ import AddOffer from "./pages/Client/partials/AddOffer";
 
 import AdminHome from "./pages/Admin/partials/Home";
 import Clients from "./pages/Admin/partials/Clients";
+import ClientDetail from "./pages/Admin/partials/ClientDetail";
 import Projects from "./pages/client/partials/Projects";
 import ProjectDetails from "./pages/client/partials/ProjectDetails";
 import Dashboard from "./pages/Admin/Dashboard";
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
       {
         path: "clients/:status",
         element: <Clients />,
+      },
+      {
+        path: "client-detail",
+        element: <ClientDetail />,
       },
     ],
   },

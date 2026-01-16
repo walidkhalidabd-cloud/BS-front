@@ -65,9 +65,7 @@ export default function HomeMain() {
         />
         <StatCard label="التقييم" value={totals.rate || 0} color="warning" />
       </div>
-      {active ? (
-        ""
-      ) : (
+      {!active && (
         <div className="container py-3 text-warning">
           الحساب غير مفعل لا يمكن إضافة عروض{" "}
         </div>
