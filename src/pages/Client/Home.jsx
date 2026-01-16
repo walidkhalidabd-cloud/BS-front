@@ -4,6 +4,7 @@ import ScrollToTopButton from "../../Components/shared/ScrollToTopButton;";
 import Footer from "../../Components/shared/Footer";
 
 export default function Home() {
+    
   return (
     <>
     <MainNavBar/>

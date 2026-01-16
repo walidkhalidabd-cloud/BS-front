@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
-import { client as apiClient } from "../../../services/api";
-import { Link, useParams } from "react-router-dom";
+import { client as apiClient, client } from "../../../services/api";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export default function Projects() {
+export default function Projects({active}) {
   const { projectStatus } = useParams();
+  const navigator = useNavigate();
   // console.log("out" , projectStatus);
 
   const [projects, setProjects] = useState([]);
+// const {active , active } = useState(second);
   const [loading, setLoading] = useState(false);
+
+
+  const handeDetails = (id)=> {
+    if (!active)
+      toast.warning("الحساب غير مفعل لا يمكن الإطلاع على تفاصيل العروض")
+    else
+      navigator(`/client/project-details/${id}`)
+
+  }
   useEffect(() => {
     async function load(projectStatus ) {
 
@@ -24,6 +35,15 @@ export default function Projects() {
       setLoading(false);
     }
     load(projectStatus);
+
+
+    const isActive = async () => {
+      const { success, data, msg } = await client.isActive();
+      console.log(data.is_active);
+      if (success) setActive(data.is_active);
+      else toast.error(msg);
+    };
+    // isActive();
   }, []);
   // ['start_date' , 'end_date' , 'duration' , 'area' , 'location' ,
   //     'description' , 'building_no'  ,'budget' ,  'note' , 'status' , 'project_type_id', 'customer_id' , 'performed_by' ,'province_id']
@@ -66,12 +86,11 @@ export default function Projects() {
               <td>{s.area}</td>
               <td>{s.location_details}</td>
               <td>
-                <Link
-                  to={`/client/project-details/${s.id}`}
+                <button onClick={() => handeDetails(s.id)}
                   className="btn btn-warning btn-sm"
                 >
                   تفاصيل
-                </Link>
+                </button>
               </td>
             </tr>
           ))}

@@ -26,22 +26,30 @@ export default function HomeMain() {
     completedProject: null,
     rate: null,
   });
+  const [active, setActive] = useState(true);
 
   const user = auth.currentUser();
-  console.log(user);
+
   useEffect(() => {
-    
     const load = async () => {
-      const { success, data, msg } = await client.getTotals();
+      let { success, data, msg } = await client.getTotals();
       if (success) setTotals(data);
       else toast.error(msg);
     };
     load();
+
+    const isActive = async () => {
+      const { success, data, msg } = await client.isActive();
+      console.log(data.is_active);
+      if (success) setActive(data.is_active);
+      else toast.error(msg);
+    };
+    isActive();
   }, []);
 
   return (
     <section className="p-5 mt-5 h-50vh">
-      <p className="mb-2  fs-1">مرحباً {user}  </p>
+      <p className="mb-2  fs-1">مرحباً {user} </p>
 
       <i className="fa-solid fa-basket-shopping"></i>
       <div className="client-cards">
@@ -55,8 +63,15 @@ export default function HomeMain() {
           value={totals.completedProject}
           color="primary"
         />
-        <StatCard label="التقييم" value={totals.rate} color="warning" />
+        <StatCard label="التقييم" value={totals.rate || 0} color="warning" />
       </div>
+      {active ? (
+        ""
+      ) : (
+        <div className="container py-3 text-warning">
+          الحساب غير مفعل لا يمكن إضافة عروض{" "}
+        </div>
+      )}
     </section>
   );
 }

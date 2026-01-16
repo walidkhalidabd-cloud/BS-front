@@ -83,7 +83,7 @@ export default function clientNavBar() {
             </div>
             <div className="collapse navbar-collapse" id="navbarCollapse">
               <div className="navbar-nav ms-auto py-0 fs-4">
-                <NavLink to="/clients" className="nav-item nav-link" end>
+                <NavLink to="/client" className="nav-item nav-link" end>
                   الرئيسية
                 </NavLink>
 

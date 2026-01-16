@@ -4,6 +4,6 @@ const customer = {
     getOffers: (projectId) => sendRequest({verb: "get" , url: `"customer/getOffers/${projectId}`}),
     AcceptOffers: (projectId) => sendRequest({verb: "post" , url: `customer/AcceptOffers/${projectId}`}),
     getSteps: (projectId) => sendRequest({verb: "get" , url: `customer/getSteps/${projectId}`}),
-    getClients: (roleId)=> sendRequest({verb: "get" , url: `customer/getClients/${roleId}`}),
+    getClients: (roleId)=> sendRequest({verb: "get" , url: `getClients/${roleId}`}),
 }
 export default customer;

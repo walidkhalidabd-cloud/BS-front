@@ -52,14 +52,12 @@ export default function ClientType() {
           {loading && <Loading />}
 
           {clients.map((s, i) => (
-            <div>
               <div className="col-md-3 p-3">
-                <div className="rounded-circle bg-white  py-5" key={i}>
+                <div className="rounded-circle bg-white  py-5 shadow shadow-lg" key={i}>
                   <p>{s.name}</p>
                   <p>{s.experience}</p>
                 </div>
               </div>
-            </div>
           ))}
         </div>
       </div>

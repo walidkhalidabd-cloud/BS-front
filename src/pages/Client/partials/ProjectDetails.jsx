@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { projects as apiProject } from "../../../services/api";
 import { toast } from "react-toastify";
-export default function ProjectDetails() {
+export default function ProjectDetails({Accountstatus}) {
   const { project_id } = useParams();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleGoBack = () => {
+  const handleGoBack = (active) => {
     navigate(-1); // Go back one step in the history stack
   };
   useEffect(() => {
@@ -102,10 +102,7 @@ export default function ProjectDetails() {
                         title="معاينة"
                       >
                         <i className="fa fa-eye text-warning"></i>
-                      </a>
-                      <a href={document.path} download>
-                        <i className="fa fa-download" title="تنزيل"></i>
-                      </a>
+                      </a>                     
                     </div>
                   ))
                 ) : (

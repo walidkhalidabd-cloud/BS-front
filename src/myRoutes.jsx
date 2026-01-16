@@ -28,7 +28,6 @@ import Role from "./pages/Admin/partials/Role";
 
 import ProtectedRoute from "./Components/ProtectedRoute";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -56,7 +55,11 @@ const router = createBrowserRouter([
       },
       {
         path: "clients/:role",
-        element: <ClientType />,
+        element: (
+          <ProtectedRoute>
+            <ClientType />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "add-project",

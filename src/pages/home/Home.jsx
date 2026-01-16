@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <MainNavBar />
-      <main>
+      <main>        
         <Outlet />
       </main>
       <ScrollToTopButton />

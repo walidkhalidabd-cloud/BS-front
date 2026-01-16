@@ -1,12 +1,13 @@
 import { Navigate } from "react-router-dom";
 import { auth } from "../services/api";
-const ProtectedRoute = ({ children, type = "customer" }) => {
-  // return children;
+const ProtectedRoute = ({ children, type = null }) => {
   if (!auth.isAuthenticated()) return <Navigate to="/login" />;
-  else if (!auth.isAuthorized(type)) {
-    console.log(auth.isAuthorized(type),"not authorized");
+  // If a type is provided, enforce authorization; otherwise allow any authenticated user
+  if (type && !auth.isAuthorized(type)) {
+    console.log(auth.isAuthorized(type), "not authorized");
     return <Navigate to="/forbidden" />;
-  } else return children;
+  }
+  return children;
 };
 
 export default ProtectedRoute;
