@@ -11,6 +11,7 @@ import Forbidden from "./pages/home/partials/Forbidden";
 import Guideline from "./pages/home/partials/Guideline";
 import About from "./pages/home/partials/About";
 import ClientType from "./pages/home/partials/ClientType";
+import Offers from "./pages/home/partials/Offers";
 
 import HomeClient from "./pages/client/Home";
 import HomeMainClient from "./pages/client/partials/HomeMain";
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <CustomerProject />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "offers/:projectId",
+        element: (
+          <ProtectedRoute>
+            <Offers />
           </ProtectedRoute>
         ),
       },

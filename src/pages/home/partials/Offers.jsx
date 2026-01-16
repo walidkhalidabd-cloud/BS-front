@@ -4,24 +4,30 @@ import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Offers() {
-  const { projectStatus } = useParams();
-  // console.log("out" , projectStatus);
+  const { projectId } = useParams();
 
-  const [projects, setProjects] = useState([]);
+  const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  async function handleOffer(offerId){
+      const { success,  msg } = await apiCustomer.acceptOffer(projectId , offerId);
+      if (success) 
+        toast.success(msg);
+      else
+        toast.error();
+    
+  }
   useEffect(() => {
-    async function load(projectStatus) {
+    async function load(projectId) {
       setLoading(true);
-    //   const { success, data, msg } = await apiCustomer.getCustomerProjects();
+      const { success, data, msg } = await apiCustomer.getOffers(projectId);
       if (success) {
-        setProjects(data);
+        setOffers(data);
       } else toast.error(msg);
       setLoading(false);
     }
-    load(projectStatus);
+    load(projectId);
   }, []);
-  // ['start_date' , 'end_date' , 'duration' , 'area' , 'location' ,
-  //     'description' , 'building_no'  ,'budget' ,  'note' , 'status' , 'project_type_id', 'customer_id' , 'performed_by' ,'province_id']
   return (
     <div className="h-50vh mt-7 container">
       <h3 className="text-secondary text-center">المشاريع</h3>
@@ -45,45 +51,35 @@ export default function Offers() {
         <thead>
           <tr>
             <th># </th>
-            <th>تاريخ البدء</th>
+            <th> الكلفة</th>
             <th>المدة</th>
-            <th>المساحة</th>
-            <th>الموقع</th>
-            <th>المنجز</th>
+            <th>تفاصيل</th>
+            <th>ملفات</th>
             <th style={{ width: 180 }}>إجراءات</th>
           </tr>
         </thead>
         <tbody>
-          {projects.map((s) => (
-            <tr key={s.id}>
+          {offers.map((s) => (
+            <tr key={s.id}> 
               <td>{s.id}</td>
-              <td>{s.start_date}</td>
+              <td>{s.cost}</td>
               <td>{s.duration}</td>
-              <td>{s.area}</td>
-              <td>{s.location_details}</td>
-              <td>الإنجاز</td>
+              <td>{s.details}</td>
+              <td>{s.documents.map((d) => (<a href={d.path} target="_blank"><i className="fa fa-eye"></i> {d.description}</a> ))}</td>
               <td>
-                {s.status == "new" ? (
-                  <Link
-                    to={`/client/project-details/${s.id}`}
+                  <button
+                    onClick={() => handleOffer(s.id)}
                     className="btn btn-warning btn-sm"
                   >
-                    العروض
-                  </Link>
-                ) : (
-                  <Link
-                    to={`/client/project-details/${s.id}`}
-                    className="btn btn-warning btn-sm"
-                  >
-                    المراحل
-                  </Link>
-                )}
+                    قبول
+                  </button>
+               
               </td>
             </tr>
           ))}
-          {projects.length === 0 && !loading && (
+          {offers.length === 0 && !loading && (
             <tr>
-              <td colSpan={6} className="text-center">
+              <td colSpan={5} className="text-center">
                 لا توجد بيانات
               </td>
             </tr>

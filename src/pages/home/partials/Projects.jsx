@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { customer as apiCustomer } from "../../../services/api";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Projects() {
-  // console.log("out" , projectStatus);
-
+const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
-  function handleOffers(){
-    
+  function handleOffers(project) {
+    navigate(`/offers/${project.id}`);
   }
   useEffect(() => {
     async function load() {
@@ -51,7 +50,6 @@ export default function Projects() {
             <th>المدة</th>
             <th>المساحة</th>
             <th>الموقع</th>
-            <th>المنجز</th>
             <th style={{ width: 180 }}>إجراءات</th>
           </tr>
         </thead>
@@ -63,12 +61,11 @@ export default function Projects() {
               <td>{s.duration}</td>
               <td>{s.area}</td>
               <td>{s.location_details}</td>
-              <td>الإنجاز</td>
               <td>
                 {s.status == "new" ? (
                   <button
                     // to={`/client/project-details/${s.id}`}
-                    onClick={handleOffers}
+                    onClick={() => handleOffers(s)}
                     className="btn btn-warning btn-sm"
                   >
                     العروض

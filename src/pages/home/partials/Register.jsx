@@ -98,7 +98,8 @@ const Register = () => {
 
     const fd = new FormData();
 
-    fd.append("role_id", formData.role_id?.id ?? "");
+    if(userType == "client")
+      fd.append("role_id", formData.role_id?.id ?? "");
 
     Object.keys(formData).forEach((key) => {
       if (key !== "role_id") {
@@ -127,6 +128,8 @@ const Register = () => {
       toast.warn("بعص الحقول غير صحيحة");
       console.log(data);
       setValidationErrors(data);
+                {console.log("x" ,data.role_id)}  
+
       console.log(data);
     } else toast.error(msg);
 
@@ -228,7 +231,7 @@ const Register = () => {
                   </div>
                   {validationErrors.role_id && (
                     <small className="text-warning">
-                      {validationErrors.role_id}
+                      {validationErrors.role_id[0]}
                     </small>
                   )}
                 </div>
