@@ -1,29 +1,16 @@
 export default function ClientDetails({ client }) {
   if (!client) return <div>لا يوجد بيانات العميل</div>;
-
+  console.log("client in details:", client);
   return (
     <div className="client-details">
       <div className="bg-white p-3 mb-3">
         <div className="project-field">
           <span className="project-label">الاسم</span> {client.name}
-        </div>
+        </div>        
         <div className="project-field">
-          <span className="project-label">البريد الإلكتروني</span>{" "}
-          {client.email}
-        </div>
-        <div className="project-field">
-          <span className="project-label">الهاتف</span> {client.phone}
-        </div>
-        {client.address && (
-          <div className="project-field">
-            <span className="project-label">العنوان</span> {client.address}
-          </div>
-        )}
-        {client.status && (
-          <div className="project-field">
-            <span className="project-label">الحالة</span> {client.status}
-          </div>
-        )}
+          <span className="project-label">الدور</span>{" "}
+          {client.role}
+        </div>                      
       </div>
 
       <div className="mx-4 mt-4 px-2 ">

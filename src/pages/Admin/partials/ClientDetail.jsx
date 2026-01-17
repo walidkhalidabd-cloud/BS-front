@@ -7,16 +7,16 @@ import { toast } from "react-toastify";
 
 export default function ClientDetail() {
   const { state } = useLocation();
+  console.log("state:", state);
   const navigate = useNavigate();
   const client = state?.client;
-    const [saving, setSaving] = useState(false);
-    const [accept, setAccept] = useState(false);
-  
+  const [saving, setSaving] = useState(false);
+  const [accept, setAccept] = useState(false);
 
   async function handleAccept(clientId) {
     setSaving(true);
     const { success, msg } = await apiAdmin.acceptClient(clientId);
-    if (success) {    
+    if (success) {
       toast.success("تم قبول العميل");
       setAccept(true);
     } else toast.error(msg);
@@ -49,7 +49,7 @@ export default function ClientDetail() {
       <ClientDetails client={client} />
       <div className="mt-3 mx-3">
         <button
-        disabled={accept}
+          disabled={accept}
           onClick={() => handleAccept(client.id)}
           className={`btn btn-outline-warning border border-warning`}
         >

@@ -79,7 +79,7 @@ export default function Offers() {
           ))}
           {offers.length === 0 && !loading && (
             <tr>
-              <td colSpan={5} className="text-center">
+              <td colSpan={6} className="text-center">
                 لا توجد بيانات
               </td>
             </tr>

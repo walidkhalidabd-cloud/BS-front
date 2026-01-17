@@ -51,6 +51,7 @@ const navigate = useNavigate();
             <th>المدة</th>
             <th>المساحة</th>
             <th>الموقع</th>
+            <th>نوعه</th>
             <th>حالته</th>
             <th>ملفات</th>        
             <th style={{ width: 180 }}>إجراءات</th>
@@ -65,17 +66,18 @@ const navigate = useNavigate();
               <td>{s.duration}</td>
               <td>{s.area}</td>
               <td>{s.location_details}</td>
-              <td>{s.status=='completed? منتهي '}</td>
+              <td>{s?.project_type?.name}</td>
+              <td>{s.status=='completed'? منتهي : s.status=='active'? 'حالي': 'جديد'}</td>
               <td>{s.documents.map((f,i)=> <a href={f.path} key={i}> <i className="fa fa-eye"> {f.description} </i> </a>)}</td>
               <td>
                 {s.status == "new" ? (
-                  <button
-                    // to={`/client/project-details/${s.id}`}
-                    onClick={() => handleOffers(s)}
+                  <Link
+                    to={`/offers/${s.id}`}
+                    // onClick={() => handleOffers(s)}
                     className="btn btn-warning btn-sm"
                   >
                     العروض
-                  </button>
+                  </Link>
                 ) : (
                   <Link
                     to={`/steps/${s.id}/${s.description}`}

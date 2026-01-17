@@ -31,6 +31,7 @@ export default function Clients() {
     async function loadClients(status) {
       setLoading(true);
       const { success, data, msg } = await apiAdmin.listClients(status);
+      console.log("clients data:", data);
       if (success) setClients(Array.isArray(data) ? data : []);
       else toast.error(msg);
       setLoading(false);
@@ -68,6 +69,7 @@ export default function Clients() {
               <tr>
                 <th>الاسم</th>
                 <th>عدد سنوات الخبرة</th>
+                <th>الدور</th>
                 <th style={{ width: 180 }}>إجراءات</th>
               </tr>
             </thead>
@@ -76,6 +78,7 @@ export default function Clients() {
                 <tr key={i}>
                   <td>{s.name}</td>
                   <td>{s.experience}</td>
+                  <td>{s.role}</td>
                   <td>
                     <button
                       onClick={() => handleAccept(s.id)}
