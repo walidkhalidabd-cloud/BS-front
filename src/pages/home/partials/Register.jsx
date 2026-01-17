@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../../services/api";
-import FileRow from "../../../Components/form/FileRow";
-
 import { documentTypes as apiDocumentTypes } from "../../../services/api";
 import { roles as apiRoles } from "../../../services/api";
+
+import FileRow from "../../../Components/form/FileRow";
+
 import Select from "react-select";
 import MyInput from "../../../components/form/MyInput";
 import Radio from "../../../components/form/Radio";
@@ -128,7 +129,6 @@ const Register = () => {
       toast.warn("بعص الحقول غير صحيحة");
       console.log(data);
       setValidationErrors(data);
-                {console.log("x" ,data.role_id)}  
 
       console.log(data);
     } else toast.error(msg);

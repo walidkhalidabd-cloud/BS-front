@@ -112,6 +112,11 @@ export default function clientNavBar() {
                   </a>
                   <ul className="dropdown-menu ">
                     <li>
+                      <Link className="nav-link mx-auto text-center" to="/profile">
+                        الملف الشخصي
+                      </Link>
+                    </li>
+                    <li>
                       <button className="nav-link mx-auto" onClick={logout}>
                         تسجيل خروج
                       </button>

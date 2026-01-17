@@ -123,14 +123,17 @@ export default function MainNavBar() {
                         <Link className="dropdown-item " to="/admin">
                           إدارة الموقع
                         </Link>
-                      ) : userType == "client" ? (
+                      ):userType == "client" ? (
+                        <>
                         <Link className="dropdown-item" to="/client">
                           إدارة المشاريع
                         </Link>
-                      ) : (
-                        <Link className="dropdown-item" to="#">
+                        <Link className="dropdown-item" to="/profile">
                           الملف الشخصي
                         </Link>
+                        </>
+                      ) : (
+                        <></>
                       )}
                     </li>
                     <li>

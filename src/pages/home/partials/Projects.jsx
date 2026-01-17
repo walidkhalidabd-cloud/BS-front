@@ -46,10 +46,13 @@ const navigate = useNavigate();
         <thead>
           <tr>
             <th># </th>
+            <th>الوصف</th>
             <th>تاريخ البدء</th>
             <th>المدة</th>
             <th>المساحة</th>
             <th>الموقع</th>
+            <th>حالته</th>
+            <th>ملفات</th>        
             <th style={{ width: 180 }}>إجراءات</th>
           </tr>
         </thead>
@@ -57,10 +60,13 @@ const navigate = useNavigate();
           {projects.map((s) => (
             <tr key={s.id}>
               <td>{s.id}</td>
+              <td>{s.description}</td>
               <td>{s.start_date}</td>
               <td>{s.duration}</td>
               <td>{s.area}</td>
               <td>{s.location_details}</td>
+              <td>{s.status=='completed? منتهي '}</td>
+              <td>{s.documents.map((f,i)=> <a href={f.path} key={i}> <i className="fa fa-eye"> {f.description} </i> </a>)}</td>
               <td>
                 {s.status == "new" ? (
                   <button
@@ -72,7 +78,7 @@ const navigate = useNavigate();
                   </button>
                 ) : (
                   <Link
-                    to={`/client/project-details/${s.id}`}
+                    to={`/steps/${s.id}/${s.description}`}
                     className="btn btn-warning btn-sm"
                   >
                     المراحل

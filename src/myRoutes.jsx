@@ -12,6 +12,7 @@ import Guideline from "./pages/home/partials/Guideline";
 import About from "./pages/home/partials/About";
 import ClientType from "./pages/home/partials/ClientType";
 import Offers from "./pages/home/partials/Offers";
+import Steps from "./pages/Home/partials/Steps";
 
 import HomeClient from "./pages/client/Home";
 import HomeMainClient from "./pages/client/partials/HomeMain";
@@ -29,6 +30,7 @@ import ProjectType from "./pages/Admin/partials/ProjectType";
 import Role from "./pages/Admin/partials/Role";
 
 import ProtectedRoute from "./Components/ProtectedRoute";
+import Profile from "./pages/Home/partials/Profile";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +66,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "profile",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "add-project",
         element: (
           <ProtectedRoute>
@@ -84,6 +94,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Offers />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "steps/:projectId/:description",
+        element: (
+          <ProtectedRoute>
+            <Steps />
           </ProtectedRoute>
         ),
       },
