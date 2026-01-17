@@ -17,6 +17,7 @@ import Steps from "./pages/Home/partials/Steps";
 import HomeClient from "./pages/client/Home";
 import HomeMainClient from "./pages/client/partials/HomeMain";
 import AddOffer from "./pages/Client/partials/AddOffer";
+import AddStep from "./pages/Client/partials/AddStep";
 
 import AdminHome from "./pages/Admin/partials/Home";
 import Clients from "./pages/Admin/partials/Clients";
@@ -111,6 +112,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/admin",
     element: (
@@ -149,6 +151,8 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+
   {
     path: "/client",
     element: (
@@ -173,6 +177,10 @@ const router = createBrowserRouter([
         path: "add-offer/:projectId",
         element: <AddOffer />,
       },
+      {
+        path: "add-step/:projectId",
+        element: <AddStep />,
+      },      
     ],
   },
   {

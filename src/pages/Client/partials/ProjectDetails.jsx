@@ -110,14 +110,7 @@ export default function ProjectDetails({Accountstatus}) {
                 )}
               </div>
 
-              <div className="text-center my-2">
-                <Link
-                  className="btn btn-sm btn-secondary fw-bold fs-6"
-                  to={`/client/add-offer/${project_id}`}
-                >
-                  تقديم عرض
-                </Link>
-
+              <div className="text-center my-2">                
                 <button
                   className="btn btn-primary me-2 fw-bold fs-6"
                   onClick={handleGoBack}

@@ -21,7 +21,14 @@ const client = {
       data,
       contentType: "multipart/form-data",
     }),
-  getProfile: () =>
+  
+  end: (project) =>
+    sendRequest({
+      verb: "post",
+      url: `/client/end/${project}`,
+    }),
+  
+    getProfile: () =>
     sendRequest({
       verb: "get",
       url: `/profile`,

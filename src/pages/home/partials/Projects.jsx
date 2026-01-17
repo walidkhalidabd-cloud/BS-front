@@ -7,6 +7,7 @@ export default function Projects() {
 const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
+  
   function handleOffers(project) {
     navigate(`/offers/${project.id}`);
   }
@@ -15,7 +16,7 @@ const navigate = useNavigate();
       setLoading(true);
       const { success, data, msg } = await apiCustomer.getCustomerProjects();
       if (success) {
-        setProjects(data);
+        setProjects(data || []);
       } else toast.error(msg);
       setLoading(false);
     }
@@ -67,20 +68,19 @@ const navigate = useNavigate();
               <td>{s.area}</td>
               <td>{s.location_details}</td>
               <td>{s?.project_type?.name}</td>
-              <td>{s.status=='completed'? منتهي : s.status=='active'? 'حالي': 'جديد'}</td>
+              <td>{s.status=='completed'? "منتهي" : s.status=='active'? 'حالي': 'جديد'}</td>
               <td>{s.documents.map((f,i)=> <a href={f.path} key={i}> <i className="fa fa-eye"> {f.description} </i> </a>)}</td>
               <td>
                 {s.status == "new" ? (
                   <Link
                     to={`/offers/${s.id}`}
-                    // onClick={() => handleOffers(s)}
                     className="btn btn-warning btn-sm"
                   >
                     العروض
                   </Link>
                 ) : (
                   <Link
-                    to={`/steps/${s.id}/${s.description}`}
+                    to={`/steps/${s.id}/${s.description || 'بدون وصف'}`}
                     className="btn btn-warning btn-sm"
                   >
                     المراحل

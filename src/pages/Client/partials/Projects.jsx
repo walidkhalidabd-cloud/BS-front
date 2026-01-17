@@ -10,8 +10,8 @@ export default function Projects() {
     projectStatus === "new"
       ? "الجديدة"
       : projectStatus === "active"
-      ? "النشطة"
-      : "المكتملة";
+        ? "النشطة"
+        : "المكتملة";
   const navigator = useNavigate();
 
   const [projects, setProjects] = useState([]);
@@ -23,6 +23,15 @@ export default function Projects() {
       toast.warning("الحساب غير مفعل لا يمكن الإطلاع على تفاصيل العروض");
     else navigator(`/client/project-details/${id}`);
   };
+
+  const handeEnd = async (id) => {      
+      const { success, msg } = await apiClient.end(id);
+      if (success) {
+        toast.success("تم إنهاء المشروع");
+        window.location.reload();
+      } else toast.error(msg);
+    }
+  
 
   useEffect(() => {
     async function load(projectStatus) {
@@ -50,6 +59,7 @@ export default function Projects() {
     };
     isActive();
   }, []);
+  
   // ['start_date' , 'end_date' , 'duration' , 'area' , 'location' ,
   //     'description' , 'building_no'  ,'budget' ,  'note' , 'status' , 'project_type_id', 'customer_id' , 'performed_by' ,'province_id']
   return (
@@ -84,19 +94,55 @@ export default function Projects() {
         </thead>
         <tbody>
           {projects.map((s) => (
+            
             <tr key={s.id}>
+            {console.log(s.status)}
               <td>{s.id}</td>
               <td>{s.start_date}</td>
               <td>{s.duration}</td>
               <td>{s.area}</td>
               <td>{s.location_details}</td>
-              <td>
+              <td className="text-nowrap">
                 <button
                   onClick={() => handeDetails(s.id)}
-                  className="btn btn-warning btn-sm"
+                  className="btn btn-info btn-sm ms-2"
                 >
                   تفاصيل
                 </button>
+
+
+                {s.status == "new" && (
+                  <Link
+                  className="btn btn-sm btn-secondary fw-bold fs-6"
+                  to={`/client/add-offer/${s.id}`}
+                >
+                  تقديم عرض
+                </Link>
+                )}
+                {s.status == "active" || s.status == "completed" && (
+                  <button
+                    onClick={() => handeDetails(s.id)}
+                    className="btn btn-info btn-sm ms-2"
+                  >
+                    خطوات
+                  </button>
+                ) }
+                {s.status == "active"  && (
+                  <>
+                  <Link
+                    to={`/client/add-step/${s.id}`}
+                    className="btn btn-warning btn-sm ms-2"
+                    >
+                    إضافة خطوة
+                  </Link>
+                   <button
+                  onClick={() => handeEnd(s.id)}
+                  className="btn btn-success btn-sm ms-2"
+                >
+                  إنهاء
+                </button>
+                    </>
+                ) }
               </td>
             </tr>
           ))}
